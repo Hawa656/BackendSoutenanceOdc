@@ -22,4 +22,8 @@ public class Video {
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user ;
+
+    @OneToOne
+    @JoinColumn(name = "id_legumesFruits")
+    private LegumesFruits legumesFruits;
 }

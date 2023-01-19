@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TypeLegumeFruitRepository extends JpaRepository<TypeLegumeFruit, Long> {
+
+    TypeLegumeFruit findByType(String type);
 }

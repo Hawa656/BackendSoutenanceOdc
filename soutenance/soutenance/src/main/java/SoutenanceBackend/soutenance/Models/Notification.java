@@ -7,7 +7,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
+
 
 @Entity
 @Getter
@@ -20,7 +23,6 @@ public class Notification {
     private Long id;
     private String titre;
     private Date date;
-    private Time heure;
 
 
     @ManyToOne

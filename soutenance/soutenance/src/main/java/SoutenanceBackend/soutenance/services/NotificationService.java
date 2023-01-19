@@ -2,6 +2,7 @@ package SoutenanceBackend.soutenance.services;
 
 import SoutenanceBackend.soutenance.Models.Notification;
 import SoutenanceBackend.soutenance.Models.Questions;
+import SoutenanceBackend.soutenance.Models.User;
 
 import java.util.List;
 

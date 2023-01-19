@@ -26,6 +26,6 @@ public class Tutoriels {
     private  String espacementEntreGraine;
     private Boolean semis;
     private  Boolean bouture;
-    private String hauteur;
+    //private String hauteur;
 
 }

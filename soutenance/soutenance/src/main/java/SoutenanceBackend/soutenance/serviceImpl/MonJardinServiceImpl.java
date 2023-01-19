@@ -3,9 +3,10 @@ package SoutenanceBackend.soutenance.serviceImpl;
 import SoutenanceBackend.soutenance.Models.MonJardin;
 import SoutenanceBackend.soutenance.Repository.MonJardinRepository;
 import SoutenanceBackend.soutenance.services.MonJardinService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class MonJardinServiceImpl implements MonJardinService {
     private MonJardinRepository monJardinRepository;
 

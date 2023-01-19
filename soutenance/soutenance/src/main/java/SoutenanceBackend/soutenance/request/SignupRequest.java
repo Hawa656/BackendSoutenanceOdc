@@ -21,6 +21,8 @@ public class SignupRequest {
     @Size(min = 3, max = 20)
     private String prenom;
 
+    private Boolean confirmNotification;
+
 
     //°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
     @NotBlank

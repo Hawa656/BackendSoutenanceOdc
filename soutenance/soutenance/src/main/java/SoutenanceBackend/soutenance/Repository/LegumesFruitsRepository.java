@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface LegumesFruitsRepository extends JpaRepository<LegumesFruits, Long> {
 
     LegumesFruits findByNom(String nom);
+
+
 }

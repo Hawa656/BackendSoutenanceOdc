@@ -36,7 +36,7 @@ public class TutorielsServiceImpl implements TutorielsService {
                     t.setEtatDeLaTerre(tutoriels.getEtatDeLaTerre());
                     t.setBouture(tutoriels.getBouture());
                     t.setSemis(tutoriels.getSemis());
-                    t.setHauteur(tutoriels.getHauteur());
+                    //t.setHauteur(tutoriels.getHauteur());
                     return tutorielsRepository.save(t);
                 }).orElseThrow(() -> new RuntimeException("legume ou fruit non trouve"));
     }

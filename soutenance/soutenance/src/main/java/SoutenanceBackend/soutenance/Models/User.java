@@ -54,9 +54,9 @@ import java.util.Set;
     @Size(max = 120)
     private String password;
 
-    @NotBlank
-    @Size(max = 120)
-    private String confirmpassword;
+
+
+    private Boolean confirmNotification;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "user_roles",
@@ -67,12 +67,18 @@ import java.util.Set;
     public User() {
     }
 
-    public User(String numero, String email, String password, String confirmpassword) {
+    public User(String numero, String email, String password) {
         this.numero = numero;
         this.email = email;
-        //this.username = username;
         this.password = password;
-        this.confirmpassword=confirmpassword;
+    }
+
+    public User(String numero, String email, String password, String nom, String prenom) {
+        this.numero = numero;
+        this.email = email;
+        this.password = password;
+        this.nom = nom;
+        this.prenom = prenom;
     }
 
     public Long getId() {
@@ -105,14 +111,6 @@ import java.util.Set;
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmpassword() {
-        return confirmpassword;
-    }
-
-    public void setConfirmpassword(String confirmpassword) {
-        this.confirmpassword = confirmpassword;
     }
 
     public Set<Role> getRoles() {

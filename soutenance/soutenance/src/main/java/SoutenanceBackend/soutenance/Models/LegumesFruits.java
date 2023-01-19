@@ -24,19 +24,19 @@ public class LegumesFruits {
     private String photo;
     private String duréeFloraisaon;
     //de janvier à decembre sous forme de checkbox avec possibilité de selectionner plusieurs mois
-    private String periodeNormal;
+
     private String arrosage;
 
-
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private EperiodeNormal periodeNormal;
 
 
     @OneToOne
     @JoinColumn(name = "id_tutoriel")
     private Tutoriels tutoriels;
 
-    @OneToOne
-    @JoinColumn(name = "id_video")
-    private Video video;
+
 
     @ManyToOne
     private TypeLegumeFruit typeLegumeFruit;

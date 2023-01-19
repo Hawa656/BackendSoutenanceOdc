@@ -1,7 +1,9 @@
 package SoutenanceBackend.soutenance.serviceImpl;
 
 import SoutenanceBackend.soutenance.Models.Notification;
+import SoutenanceBackend.soutenance.Models.User;
 import SoutenanceBackend.soutenance.Repository.NotificationRepository;
+import SoutenanceBackend.soutenance.Repository.UserRepository;
 import SoutenanceBackend.soutenance.services.NotificationService;
 import org.springframework.stereotype.Service;
 
@@ -9,14 +11,24 @@ import java.util.List;
 @Service
 public class NotificationServiceImpl implements NotificationService {
     private NotificationRepository notificationRepository;
+    private UserRepository userRepository;
 
-    public NotificationServiceImpl(NotificationRepository notificationRepository) {
+    public NotificationServiceImpl(NotificationRepository notificationRepository, UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public Notification creer(Notification notification) {
-        return notificationRepository.save(notification);
+        //on verifie si l'attribut confirmNotification est a true
+        User user = notification.getUser();
+        if(user.getConfirmNotification()){
+            return notificationRepository.save(notification);
+        }else {
+            return null;
+        }
+
+
     }
 
     @Override
@@ -32,7 +44,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .map(n ->{
                     n.setDate(notification.getDate());
                     n.setTitre(notification.getTitre());
-                    n.setHeure(notification.getHeure());
+
 
                     return notificationRepository.save(n);
                 } ).orElseThrow(() -> new RuntimeException("notification non trouvé"));

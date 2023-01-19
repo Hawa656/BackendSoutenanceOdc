@@ -1,5 +1,6 @@
 package SoutenanceBackend.soutenance.serviceImpl;
 
+import SoutenanceBackend.soutenance.Models.EperiodeNormal;
 import SoutenanceBackend.soutenance.Models.LegumesFruits;
 import SoutenanceBackend.soutenance.Repository.LegumesFruitsRepository;
 import SoutenanceBackend.soutenance.services.LegumesFruitsService;
@@ -19,6 +20,7 @@ public class LegumesFruitsServiceImpl implements LegumesFruitsService {
 
     @Override
     public LegumesFruits creer(LegumesFruits legumesFruits) {
+
         return legumesFruitsRepository.save(legumesFruits);
     }
 
@@ -36,7 +38,7 @@ public class LegumesFruitsServiceImpl implements LegumesFruitsService {
                     lf.setDescription(legumesFruits.getDescription());
                     lf.setPhoto(legumesFruits.getPhoto());
                     lf.setDuréeFloraisaon(legumesFruits.getDuréeFloraisaon());
-                    lf.setPeriodeNormal(legumesFruits.getPeriodeNormal());
+                    lf.setPeriodeNormal(EperiodeNormal.Mars);
                     lf.setArrosage(legumesFruits.getArrosage());
 
                     return legumesFruitsRepository.save(lf);

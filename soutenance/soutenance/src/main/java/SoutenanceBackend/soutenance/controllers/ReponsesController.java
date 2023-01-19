@@ -69,7 +69,7 @@ public class ReponsesController {
         User user = userService.hawa();
         reponses1.setUser(user);
         if (idQuestion==null){
-            return "Pas de question coreespondante";
+            return "Pas de question correspondante";
         }
         reponsesService.creer(reponses1);
         return "Rponses ajouter avec succès";
