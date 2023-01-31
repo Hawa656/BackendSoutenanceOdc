@@ -6,9 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Date;
 
 
@@ -17,13 +14,16 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Notification {
+public class Tache {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titre;
     private Date date;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private EStatut eStatut;
 
     @ManyToOne
     private User user;

@@ -9,4 +9,6 @@ public interface LegumesFruitsService {
     List<LegumesFruits> lire();
     LegumesFruits modifier(Long id, LegumesFruits legumesFruits);
     String supprimer(Long id);
+
+    LegumesFruits RecupereIdLegume(Long idLegumeFruit);
 }

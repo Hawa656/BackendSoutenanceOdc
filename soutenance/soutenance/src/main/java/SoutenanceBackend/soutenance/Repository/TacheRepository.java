@@ -1,9 +1,12 @@
 package SoutenanceBackend.soutenance.Repository;
 
-import SoutenanceBackend.soutenance.Models.Notification;
+import SoutenanceBackend.soutenance.Models.Tache;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+
 @Repository
-public interface NotificationRepository extends JpaRepository<Notification,Long> {
+public interface TacheRepository extends JpaRepository<Tache,Long> {
+    Tache findByDate(Date date);
 }

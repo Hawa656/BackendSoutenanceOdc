@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/legumefruit")
+@CrossOrigin(origins = "http://localhost:8100")
 public class LegumesFruitsController {
 
 
@@ -36,6 +37,12 @@ public class LegumesFruitsController {
     private TutorielsService tutorielsService;
 
     private TutorielsRepository tutorielsRepository;
+
+
+    @GetMapping("RecupererIdLegumeFruit/{idlegumefruit}")
+    public LegumesFruits RecupererId(@PathVariable("idlegumefruit") Long idlegumefruit){
+        return legumesFruitsService.RecupereIdLegume(idlegumefruit);
+    }
 
     public LegumesFruitsController(LegumesFruitsService legumesFruitsService, LegumesFruitsRepository legumesFruitsRepository, TypeLegumeFruitRepository typeLegumeFruitRepository, UserRepository userRepository, TutorielsService tutorielsService, TutorielsRepository tutorielsRepository) {
      //   this.legumesFruits = legumesFruits;
@@ -65,8 +72,16 @@ public class LegumesFruitsController {
     }*/
     //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
     @GetMapping("/lireLegumesFruits")
+
     public List<LegumesFruits> read(){
         return legumesFruitsService.lire();
+
+    }
+
+    //°°°°°°°°°°°°°°°°°°°°°°AFFICHER La liste des LEGUMES°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("/lireLegumes")
+    public List<LegumesFruits> afficherlistelegume(){
+        return legumesFruitsRepository.ListeLegumes();
 
     }
     //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
@@ -81,7 +96,7 @@ public class LegumesFruitsController {
     }
 
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UN LEGUME OU FRUIT ET LE TUTORIEL °°°°°°°°°°°°°°°°°°°°°
-    @PreAuthorize(" hasRole('USER')")
+    //@PreAuthorize(" hasRole('ADMIN')")
     @PostMapping("/Ajouterajoutfruilegume/{id_type}")
     public String ajoutfruilegume(@Param("nom") String nom,
                                   @Param("description") String description, @Param("arrosage") String arrosage,
@@ -95,7 +110,7 @@ public class LegumesFruitsController {
         LegumesFruits legumesFruits1 = new LegumesFruits();
         legumesFruits1.setNom(nom);
         legumesFruits1.setArrosage(arrosage);
-        legumesFruits1.setDuréeFloraisaon(duréeFloraisaon);
+        legumesFruits1.setDureeFloraisaon(duréeFloraisaon);
         legumesFruits1.setDescription(description);
 
         if(periodeNormal.equals("Janvier")){

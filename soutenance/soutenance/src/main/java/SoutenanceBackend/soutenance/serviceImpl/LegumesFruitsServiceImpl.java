@@ -37,7 +37,7 @@ public class LegumesFruitsServiceImpl implements LegumesFruitsService {
                     lf.setNom(legumesFruits.getNom());
                     lf.setDescription(legumesFruits.getDescription());
                     lf.setPhoto(legumesFruits.getPhoto());
-                    lf.setDuréeFloraisaon(legumesFruits.getDuréeFloraisaon());
+                    lf.setDureeFloraisaon(legumesFruits.getDureeFloraisaon());
                     lf.setPeriodeNormal(EperiodeNormal.Mars);
                     lf.setArrosage(legumesFruits.getArrosage());
 
@@ -50,5 +50,10 @@ public class LegumesFruitsServiceImpl implements LegumesFruitsService {
     public String supprimer(Long id) {
             legumesFruitsRepository.deleteById(id);
         return "supprimer avec succès";
+    }
+
+    @Override
+    public LegumesFruits RecupereIdLegume(Long idLegumeFruit) {
+        return legumesFruitsRepository.findById(idLegumeFruit).get();
     }
 }

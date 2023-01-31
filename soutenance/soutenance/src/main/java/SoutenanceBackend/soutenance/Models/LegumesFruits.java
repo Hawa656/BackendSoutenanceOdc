@@ -22,7 +22,7 @@ public class LegumesFruits {
     private String nom;
     private String description;
     private String photo;
-    private String duréeFloraisaon;
+    private String dureeFloraisaon;
     //de janvier à decembre sous forme de checkbox avec possibilité de selectionner plusieurs mois
 
     private String arrosage;

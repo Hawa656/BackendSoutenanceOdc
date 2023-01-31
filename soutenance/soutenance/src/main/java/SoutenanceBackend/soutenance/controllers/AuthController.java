@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 //@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-//@CrossOrigin(origins = "http://localhost:8100")
+@CrossOrigin(origins = "http://localhost:8100", maxAge = 3600, allowCredentials = "true")
 public class AuthController {
   @Autowired
   AuthenticationManager authenticationManager;
@@ -70,7 +70,7 @@ public class AuthController {
 
   /*@Autowired
   EmailSenderService emailSenderService;*/
-
+//°°°°°°°°°°°°°°°°°°°°°°°°S'AUTHENTIFIER°°°°°°°°°°°°°°°°°°°°°°°°°°°°
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -91,7 +91,7 @@ public class AuthController {
                          userDetails.getEmail(), 
                          roles));
   }
-
+  //°°°°°°°°°°°°°°°°°°°°°°°°CREER UN COMPTE°°°°°°°°°°°°°°°°°°°°°°°°°°°°
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     if (userRepository.existsByNumero(signUpRequest.getNumero())) {
@@ -147,6 +147,7 @@ public class AuthController {
       System.out.println(user.getRoles().contains("cvhbjnklmkjhgbvvvvvvvvvvvvvvvvhhhhhh  "  + roleRepository.findByName(ERole.ROLE_ADMIN)));
       if(user.getRoles().contains(roleRepository.findByName(ERole.ROLE_ADMIN))){
         System.out.println();
+        user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
         mailSender.send(emailConstructor.constructNewUserEmail(user));
       }else {
@@ -170,7 +171,7 @@ public class AuthController {
     return "Administrateur ajouté avec succès";
   }
 
-  //::::::::::::::::::::::::::::::REINITIALISER PASSWORD::::::::::::::::::::::::::::::::::::::::::://
+  //°°°°°°°°°°°°°°°°°°°°°°°°°REINITIALISER PASSWORD°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
   @PostMapping("/resetPassword/{email}")
   public ResponseEntity<String> resetPassword(@PathVariable("email") String email) {

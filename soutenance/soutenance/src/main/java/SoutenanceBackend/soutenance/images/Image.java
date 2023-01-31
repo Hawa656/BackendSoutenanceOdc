@@ -10,11 +10,11 @@ public class Image {
     public static String localhost = "http://127.0.0.1/";
 
     //°°°°°°°°°°°°°°°°°°°°°° nom du dossier contenant l'image°°°°°°°°°°°°°°°°°°°
-    public static String serveruser = localhost + "imageSoutenance";
+    public static String serveruser = localhost + "imageSoutenance/";
 
     //°°°°°°°°°°°°°°°°°°°°°°chemin de l'image°°°°°°°°°°°°°°°°°°°
 
-    public static String Userlocation = "C:/xampp/htdocs/imageSoutenance";
+    public static String Userlocation = "C:/xampp/htdocs/imageSoutenance/";
 
     public static String save(MultipartFile file, String nomFichier) {
         String src = "";
