@@ -84,6 +84,13 @@ public class LegumesFruitsController {
         return legumesFruitsRepository.ListeLegumes();
 
     }
+    //°°°°°°°°°°°°°°°°°°°°°°AFFICHER La liste des FRUITS°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("/lireFruits")
+    public List<LegumesFruits> afficherlistefruit(){
+        return legumesFruitsRepository.ListeFruits();
+
+    }
+
     //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
     @DeleteMapping("/supprimerlegumesFruits/{id}")
     public String delete(@PathVariable Long id){
@@ -97,21 +104,22 @@ public class LegumesFruitsController {
 
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UN LEGUME OU FRUIT ET LE TUTORIEL °°°°°°°°°°°°°°°°°°°°°
     //@PreAuthorize(" hasRole('ADMIN')")
-    @PostMapping("/Ajouterajoutfruilegume/{id_type}")
+    @PostMapping("/Ajouterajoutfruilegume")
     public String ajoutfruilegume(@Param("nom") String nom,
                                   @Param("description") String description, @Param("arrosage") String arrosage,
-                                  @Param("periodeNormal") String periodeNormal, @Param("duréeFloraisaon") String duréeFloraisaon, @PathVariable("id_type") TypeLegumeFruit id_type,
+                                  @Param("periodeNormal") String periodeNormal, @Param("dureeFloraisaon") String dureeFloraisaon,
                                   @Param("file") MultipartFile file,
                                   @Param("titre") String titre,
                                   @Param("descriptiont") String descriptiont, @Param("etatDeLaTerre") String etatDeLaTerre,
-                                  @Param("espacementEntreGraine") String espacementEntreGraine, @Param("semis") Boolean semis, @Param("bouture") Boolean bouture){
+                                  @Param("espacementEntreGraine") String espacementEntreGraine, @Param("semis") Boolean semis, @Param("bouture") Boolean bouture, @Param("id") Long id){
 
 
         LegumesFruits legumesFruits1 = new LegumesFruits();
         legumesFruits1.setNom(nom);
         legumesFruits1.setArrosage(arrosage);
-        legumesFruits1.setDureeFloraisaon(duréeFloraisaon);
+        legumesFruits1.setDureeFloraisaon(dureeFloraisaon);
         legumesFruits1.setDescription(description);
+
 
         if(periodeNormal.equals("Janvier")){
             legumesFruits1.setPeriodeNormal(EperiodeNormal.Janvier);
@@ -149,10 +157,13 @@ public class LegumesFruitsController {
            /* TypeLegumeFruit typelf = typeLegumeFruitRepository.findByType(type);
             legumesFruits1.setTypeLegumeFruit(typelf);*/
 
-            legumesFruits1.setTypeLegumeFruit(id_type);
+            legumesFruits1.setTypeLegumeFruit(typeLegumeFruitRepository.findById(id).get());
+
             //recuperation de l'id de l'utilisateur connecté
             User user = userService.hawa();
             legumesFruits1.setUser(user);
+
+
 
             Tutoriels tutoriels1 = new Tutoriels();
             tutoriels1.setTitre(titre);

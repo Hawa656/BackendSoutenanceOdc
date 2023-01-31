@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/Tâche")
+@CrossOrigin(origins = "http://localhost:8100")
 public class TacheController {
     private TacheService tacheService;
     private UserService userService;

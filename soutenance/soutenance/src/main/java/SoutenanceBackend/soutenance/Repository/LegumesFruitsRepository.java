@@ -14,11 +14,14 @@ public interface LegumesFruitsRepository extends JpaRepository<LegumesFruits, Lo
 
     LegumesFruits findByNom(String nom);
 
-
+    //==========AFFICHER LISTE DES LEGUMES==================
     @Modifying
     @Transactional
     @Query(value = "SELECT * FROM `legumes_fruits` WHERE legumes_fruits.type_legume_fruit_id=1;",nativeQuery = true)
     List<LegumesFruits> ListeLegumes();
-
-
+    //==========AFFICHER LISTE DES FRUITS==================
+    @Modifying
+    @Transactional
+    @Query(value = "SELECT * FROM `legumes_fruits` WHERE legumes_fruits.type_legume_fruit_id=2;",nativeQuery = true)
+    List<LegumesFruits> ListeFruits();
 }

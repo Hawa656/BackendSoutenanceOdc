@@ -1,6 +1,7 @@
 package SoutenanceBackend.soutenance.serviceImpl;
 
 import SoutenanceBackend.soutenance.Models.Conseils;
+import SoutenanceBackend.soutenance.Models.LegumesFruits;
 import SoutenanceBackend.soutenance.Repository.ConseilsRepository;
 import SoutenanceBackend.soutenance.services.ConseilsService;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,10 @@ public class ConseilsServiceImpl implements ConseilsService {
 
          conseilsRepository.deleteById(id);
          return "supprimer avec succès";
+    }
+
+    @Override
+    public Conseils RecupereIdConseil(Long idConseil) {
+        return conseilsRepository.findById(idConseil).get();
     }
 }

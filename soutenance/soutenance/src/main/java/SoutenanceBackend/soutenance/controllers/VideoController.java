@@ -1,5 +1,6 @@
 package SoutenanceBackend.soutenance.controllers;
 
+import SoutenanceBackend.soutenance.Models.LegumesFruits;
 import SoutenanceBackend.soutenance.Models.User;
 import SoutenanceBackend.soutenance.Models.Video;
 import SoutenanceBackend.soutenance.Repository.UserRepository;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/video")
+@CrossOrigin(origins = "http://localhost:8100")
 public class VideoController {
     private VideoService videoService;
     private UserService userService;
@@ -60,8 +62,9 @@ public class VideoController {
 
 
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UNE VIDEO°°°°°°°°°°°°°°°°°°°°°
-    @PostMapping("/Ajouter")
+    @PostMapping("/Ajouter/{idLegumeFruit}")
     public String ajout(@RequestParam(value = "file")MultipartFile file,
+                        @PathVariable LegumesFruits idLegumeFruit,
                         @RequestParam(value = "videorecu") String videorecu) throws IOException {
     //recuperation de l
         String nomvideo = StringUtils.cleanPath(file.getOriginalFilename());
@@ -75,6 +78,7 @@ public class VideoController {
         //recuperation de l'id de l'utilisateur connecté
         User user = userService.hawa();
         video.setUser(user);
+        video.setLegumesFruits(idLegumeFruit);
 
 
         videoService.creer(video);

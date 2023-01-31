@@ -87,6 +87,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/legumefruit/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .antMatchers("/reponses/**").permitAll()
+                .antMatchers("/api/video/**").permitAll()
+                .antMatchers("/api/conseil/**").permitAll()
 
 
                 .anyRequest().authenticated();

@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/monJardin")
+@CrossOrigin(origins = "http://localhost:8100")
 public class MonJardinController {
     private MonJardinService monJardinService;
     private final MonJardinRepository monJardinRepository;

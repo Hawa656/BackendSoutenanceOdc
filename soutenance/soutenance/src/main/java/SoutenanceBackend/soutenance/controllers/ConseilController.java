@@ -1,6 +1,7 @@
 package SoutenanceBackend.soutenance.controllers;
 
 import SoutenanceBackend.soutenance.Models.Conseils;
+import SoutenanceBackend.soutenance.Models.LegumesFruits;
 import SoutenanceBackend.soutenance.Repository.ConseilsRepository;
 import SoutenanceBackend.soutenance.Repository.UserRepository;
 import SoutenanceBackend.soutenance.images.Image;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/conseil")
+@CrossOrigin(origins = "http://localhost:8100")
 public class ConseilController {
     private ConseilsRepository conseilsRepository;
     private UserRepository userRepository;
@@ -25,8 +27,13 @@ public class ConseilController {
         this.conseilsService = conseilsService;
     }
 
+    @GetMapping("RecupererIdConseil/{idConseil}")
+    public Conseils RecupererId(@PathVariable("idConseil") Long idConseil){
+        return conseilsService.RecupereIdConseil(idConseil);
+    }
+
     //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
-    @GetMapping("/lireConseil{id_user}")
+    @GetMapping("/lireConseil")
     public List<Conseils> read(){
         return conseilsService.lire();
 
@@ -45,8 +52,8 @@ public class ConseilController {
     @PostMapping("/Ajouter")
     public String create(@Param("titre") String titre,
                         @Param("description") String description,
-                         @Param("file") MultipartFile file,
-                         @Param("photo" )String photo) throws IOException {
+                         @Param("file") MultipartFile file
+                         ) throws IOException {
         Conseils conseils1 = new Conseils();
         conseils1.setTitre(titre);
         conseils1.setDescription(description);
