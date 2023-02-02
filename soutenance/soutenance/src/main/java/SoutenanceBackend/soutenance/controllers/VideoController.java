@@ -2,13 +2,14 @@ package SoutenanceBackend.soutenance.controllers;
 
 import SoutenanceBackend.soutenance.Models.LegumesFruits;
 import SoutenanceBackend.soutenance.Models.User;
-import SoutenanceBackend.soutenance.Models.Video;
+import SoutenanceBackend.soutenance.Repository.LegumesFruitsRepository;
 import SoutenanceBackend.soutenance.Repository.UserRepository;
 import SoutenanceBackend.soutenance.Repository.VideoRepository;
-import SoutenanceBackend.soutenance.images.Image;
+import SoutenanceBackend.soutenance.images.Video;
 import SoutenanceBackend.soutenance.services.UserService;
 import SoutenanceBackend.soutenance.services.VideoService;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,22 +27,46 @@ public class VideoController {
     private VideoRepository videoRepository;
 
     private UserRepository userRepository;
+    private final LegumesFruitsRepository legumesFruitsRepository;
     //private VideoRepository videoRepository;
 
-    public VideoController(VideoService videoService, UserService userService, VideoRepository videoRepository) {
+    public VideoController(VideoService videoService, UserService userService, VideoRepository videoRepository,
+                           LegumesFruitsRepository legumesFruitsRepository) {
         this.videoService = videoService;
         this.userService = userService;
         //this.videoRepository = videoRepository;
 
         this.videoRepository = videoRepository;
+        this.legumesFruitsRepository = legumesFruitsRepository;
     }
+
+    //°°°°°°°°°°°°°°°°°°°°°°FILTRER LES VIDEOS PAR LEGUME ET FRUIT°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("/listeVideoLegume/{abasse}")
+        public List<SoutenanceBackend.soutenance.Models.Video> filtrerParLegume(@PathVariable String abasse){
+        return videoRepository.listVideoLegumes(abasse);
+    }
+
+    //°°°°°°°°°°°°°°°°°°°°°°FILTRER LES VIDEOS PAR FRUIT°°°°°°°°°°°°°°°°°°°°°
+   /* @GetMapping("/listeVideoFruit")
+    public List<SoutenanceBackend.soutenance.Models.Video> filtrerParFruit(){
+        return videoRepository.listVideoFruits();
+    }*/
 
     //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UNE VIDEO°°°°°°°°°°°°°°°°°°°°°
     @GetMapping("/lireVideo")
-    public List<Video> read(){
+    public List<SoutenanceBackend.soutenance.Models.Video> read(){
         return videoService.lire();
-
     }
+
+
+    //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UNE VIDEO°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("/videoParLegume/{legumesFruits}")
+    public Object reads(LegumesFruits legumesFruits){
+        legumesFruits.getTypeLegumeFruit();
+         videoRepository.findByLegumesFruits(legumesFruits);
+        return   legumesFruits.getTypeLegumeFruit();
+    }
+
     //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER UNE VIDEO°°°°°°°°°°°°°°°°°°°°°
     @DeleteMapping("/supprimerVideo/{id}")
     public String delete(@PathVariable Long id){
@@ -55,7 +80,7 @@ public class VideoController {
     }
     //°°°°°°°°°°°°°°°°°°°°°°MODIFIER UNE VIDEO°°°°°°°°°°°°°°°°°°°°°
     @PutMapping("modifierVideo/{id}")
-    public Video update(@PathVariable Long id, @RequestBody Video video){
+    public SoutenanceBackend.soutenance.Models.Video update(@PathVariable Long id, @RequestBody SoutenanceBackend.soutenance.Models.Video video){
         return videoService.modifier(id, video);
     }
 
@@ -64,28 +89,40 @@ public class VideoController {
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UNE VIDEO°°°°°°°°°°°°°°°°°°°°°
     @PostMapping("/Ajouter/{idLegumeFruit}")
     public String ajout(@RequestParam(value = "file")MultipartFile file,
-                        @PathVariable LegumesFruits idLegumeFruit,
+                        @PathVariable long idLegumeFruit,
                         @RequestParam(value = "videorecu") String videorecu) throws IOException {
     //recuperation de l
         String nomvideo = StringUtils.cleanPath(file.getOriginalFilename());
         //Image.save(file, );
         //Enregistrement de la la video
-        Image.save(file, nomvideo);
+        Video.save(file, nomvideo);
 
         //video.setUser(userRepository.findById(id).get());
-        Video video = new JsonMapper().readValue(videorecu, Video.class);
+        SoutenanceBackend.soutenance.Models.Video video = new JsonMapper().readValue(videorecu, SoutenanceBackend.soutenance.Models.Video.class);
         video.setVideo(nomvideo);
         //recuperation de l'id de l'utilisateur connecté
         User user = userService.hawa();
         video.setUser(user);
-        video.setLegumesFruits(idLegumeFruit);
+        video.setLegumesFruits(new LegumesFruits(idLegumeFruit));
 
-
-        videoService.creer(video);
+        try {
+            videoService.creer(video);
 
             return "vidéo ajouter avec succès";
+        } catch (DataIntegrityViolationException dive) {
+            return "Pas de fruit ou legume correspondant";
+        }
+
         }
 
 
+    //°°°°°°°°°°°°°°°°°°°°°°RECUPERATION DE VIDEO PAR IDLEGUMEFRUIT°°°°°°°°°°°°°°°°°°°°°
+    //°°°°°°°°CETTE METHODE RETOURNE LES INFO SUR LEGUMESFRUITS, VIDEO ,TUTORIELS
+    @GetMapping("/videoparIdLegumeFruit/{id_legumesFruits}")
+    public SoutenanceBackend.soutenance.Models.Video reads(@PathVariable("id_legumesFruits") Long id_legumesFruits){
+        LegumesFruits legumesFruits = legumesFruitsRepository.findById(id_legumesFruits).get();
+        return videoRepository.findByLegumesFruits(legumesFruits);
     }
+
+}
 

@@ -1,10 +1,10 @@
 package SoutenanceBackend.soutenance.controllers;
 
 import SoutenanceBackend.soutenance.Models.Conseils;
-import SoutenanceBackend.soutenance.Models.LegumesFruits;
 import SoutenanceBackend.soutenance.Repository.ConseilsRepository;
 import SoutenanceBackend.soutenance.Repository.UserRepository;
 import SoutenanceBackend.soutenance.images.Image;
+import SoutenanceBackend.soutenance.images.Video;
 import SoutenanceBackend.soutenance.services.ConseilsService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;

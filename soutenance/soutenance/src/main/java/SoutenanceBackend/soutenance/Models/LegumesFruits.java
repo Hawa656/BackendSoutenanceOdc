@@ -43,6 +43,10 @@ public class LegumesFruits {
     @ManyToOne
     private TypeLegumeFruit typeLegumeFruit;
 
+    @OneToOne
+    @JoinColumn(name = "id_video")
+    private Video legume;
+
     @ManyToOne
     private User user;
 
@@ -51,4 +55,12 @@ public class LegumesFruits {
             joinColumns = @JoinColumn(name = "legumefruit_id"),
             inverseJoinColumns = @JoinColumn(name = "activite_id"))
     private Set<Activites> activites = new HashSet<>();
+
+    public LegumesFruits(long idLegumeFruit) {
+        this.id = idLegumeFruit;
+    }
+
+//
+//    @OneToOne
+//    private Video video;
 }

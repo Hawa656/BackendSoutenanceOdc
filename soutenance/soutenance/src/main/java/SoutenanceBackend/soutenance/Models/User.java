@@ -81,6 +81,10 @@ import java.util.Set;
         this.prenom = prenom;
     }
 
+    public User(long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

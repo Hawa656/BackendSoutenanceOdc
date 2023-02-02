@@ -68,6 +68,14 @@ public class AuthController {
   @Autowired
   BCryptPasswordEncoder bCryptPasswordEncoder;
 
+//  °°°°°°°°°°°°°°°AFFICHER LES UTILISATEURS°°°°°°°°°°°°°°°°°°°°°°°°
+
+  @GetMapping("/listeUser")
+  public List<User> read(){
+    return userService.Afficher();
+  }
+
+
   /*@Autowired
   EmailSenderService emailSenderService;*/
 //°°°°°°°°°°°°°°°°°°°°°°°°S'AUTHENTIFIER°°°°°°°°°°°°°°°°°°°°°°°°°°°°

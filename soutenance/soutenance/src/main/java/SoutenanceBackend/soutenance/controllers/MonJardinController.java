@@ -2,7 +2,7 @@ package SoutenanceBackend.soutenance.controllers;
 
 import SoutenanceBackend.soutenance.Models.*;
 import SoutenanceBackend.soutenance.Repository.MonJardinRepository;
-import SoutenanceBackend.soutenance.images.Image;
+import SoutenanceBackend.soutenance.images.Video;
 import SoutenanceBackend.soutenance.services.MonJardinService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +37,7 @@ public class MonJardinController {
         if(monJardinRepository.findByNom(nom) == null){
 
 
-            monJardin1.setPhoto(Image.save(file, monJardin1.getPhoto()));
+            monJardin1.setPhoto(Video.save(file, monJardin1.getPhoto()));
 
 
             monJardin1.setUser(id_user);
