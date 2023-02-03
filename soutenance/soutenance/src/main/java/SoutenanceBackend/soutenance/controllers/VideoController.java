@@ -116,7 +116,12 @@ public class VideoController {
         }
 
 
-    //°°°°°°°°°°°°°°°°°°°°°°RECUPERATION DE VIDEO PAR IDLEGUMEFRUIT°°°°°°°°°°°°°°°°°°°°°
+    //°°°°°°°°°°°°°°°°°°°°°°RECUPERATION DE VIDEO PAR IDLEGUMEFRUIT°°°°°°°°°°°°°°
+
+    
+    // Le probleme est que legumeFruit est lier à typeLegumeFruit qui
+    // prend que 2 variable fruit ou legume, et video est lier à legumeFruit or on a besoin
+    // d'afficher la video d'un legumeFruit donner°°°°°°°
     //°°°°°°°°CETTE METHODE RETOURNE LES INFO SUR LEGUMESFRUITS, VIDEO ,TUTORIELS
     @GetMapping("/videoparIdLegumeFruit/{id_legumesFruits}")
     public SoutenanceBackend.soutenance.Models.Video reads(@PathVariable("id_legumesFruits") Long id_legumesFruits){

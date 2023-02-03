@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserService {
     String Supprimer(Long id_users);  // LA METHODE PERMETTANT DE SUPPRIMER UN UTILISATEUR
 
-    String Modifier(User users);   // LA METHODE PERMETTANT DE MODIFIER UN UTILISATEUR
+    String Modifier(Long id,User users);   // LA METHODE PERMETTANT DE MODIFIER UN UTILISATEUR
 
     List<User> Afficher();       // LA METHODE PERMETTANT D'AFFICHER UN UTILISATEUR
 

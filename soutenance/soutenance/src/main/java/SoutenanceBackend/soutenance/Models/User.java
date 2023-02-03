@@ -50,7 +50,7 @@ import java.util.Set;
     @Email
     private String email;
 
-    @NotBlank
+    //@NotBlank
     @Size(max = 120)
     private String password;
 

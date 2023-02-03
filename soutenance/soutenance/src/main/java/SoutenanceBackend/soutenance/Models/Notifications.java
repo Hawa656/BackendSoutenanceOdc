@@ -17,4 +17,12 @@ public class Notifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
+
+    @ManyToOne
+    private Tache tache;
+
+    @ManyToOne
+    private User user;
 }

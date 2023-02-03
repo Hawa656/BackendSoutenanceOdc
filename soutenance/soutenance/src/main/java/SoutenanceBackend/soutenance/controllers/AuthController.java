@@ -29,10 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 //@CrossOrigin(origins = "*", maxAge = 3600)
@@ -73,6 +70,22 @@ public class AuthController {
   @GetMapping("/listeUser")
   public List<User> read(){
     return userService.Afficher();
+  }
+
+  //  °°°°°°°°°°°°°°°MODIFIER UN UTILISATEUR°°°°°°°°°°°°°°°°°°°°°°°°
+  @PutMapping("/user/{id}")
+  public ResponseEntity<?> updateUser(@Valid @RequestBody User updateUser, @PathVariable("id") Long id) {
+    Optional<User> optionalUser = userRepository.findById(id);
+    if (!optionalUser.isPresent()) {
+      return ResponseEntity.badRequest().body(new MessageResponse("Erreur: Utilisateur non trouvé."));
+    }
+    User user = optionalUser.get();
+    user.setEmail(updateUser.getEmail());
+    user.setNom(updateUser.getNom());
+    user.setPrenom(updateUser.getPrenom());
+    user.setUsername(updateUser.getNumero());
+    userRepository.save(user);
+    return ResponseEntity.ok(new MessageResponse("Utilisateur modifier avec succès"));
   }
 
 
