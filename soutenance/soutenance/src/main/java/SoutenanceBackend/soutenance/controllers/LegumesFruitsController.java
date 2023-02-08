@@ -12,6 +12,7 @@ import SoutenanceBackend.soutenance.services.TutorielsService;
 import SoutenanceBackend.soutenance.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -103,14 +104,14 @@ public class LegumesFruitsController {
 
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UN LEGUME OU FRUIT ET LE TUTORIEL °°°°°°°°°°°°°°°°°°°°°
     //@PreAuthorize(" hasRole('ADMIN')")
-    @PostMapping("/Ajouterajoutfruilegume")
-    public String ajoutfruilegume(@Param("nom") String nom,
+    @PostMapping("/Ajouterajoutfruilegume/{type}/{iduser}")
+    public Object ajoutfruilegume(@Param("nom") String nom,
                                   @Param("description") String description, @Param("arrosage") String arrosage,
                                   @Param("periodeNormal") String periodeNormal, @Param("dureeFloraisaon") String dureeFloraisaon,
                                   @Param("file") MultipartFile file,
                                   @Param("titre") String titre,
                                   @Param("descriptiont") String descriptiont, @Param("etatDeLaTerre") String etatDeLaTerre,
-                                  @Param("espacementEntreGraine") String espacementEntreGraine, @Param("semis") Boolean semis, @Param("bouture") Boolean bouture, @Param("id") Long id){
+                                  @Param("espacementEntreGraine") String espacementEntreGraine, @Param("semis") String semis, @Param("bouture") String bouture, @PathVariable("type") String type, @PathVariable("iduser") Long iduser){
 
 
         LegumesFruits legumesFruits1 = new LegumesFruits();
@@ -118,9 +119,9 @@ public class LegumesFruitsController {
         legumesFruits1.setArrosage(arrosage);
         legumesFruits1.setDureeFloraisaon(dureeFloraisaon);
         legumesFruits1.setDescription(description);
-
-
-        if(periodeNormal.equals("Janvier")){
+        Boolean rtrr = Boolean.valueOf(semis);
+        Boolean ettwy = Boolean.valueOf(bouture);
+        /*if(periodeNormal.equals("Janvier")){
             legumesFruits1.setPeriodeNormal(EperiodeNormal.Janvier);
         }else if(periodeNormal.equals("Fevrier")){
             legumesFruits1.setPeriodeNormal(EperiodeNormal.Fevrier);
@@ -144,22 +145,24 @@ public class LegumesFruitsController {
             legumesFruits1.setPeriodeNormal(EperiodeNormal.Novembre);
         }else {periodeNormal.equals("Decembre");
             legumesFruits1.setPeriodeNormal(EperiodeNormal.Decembre);
-        }
+        }*/
+
+        legumesFruits1.setPeriodeNormal(periodeNormal);
 
         if(legumesFruitsRepository.findByNom(nom) == null){
 
-
-            legumesFruits1.setPhoto(Image.save(file, legumesFruits1.getPhoto()));
+            String nomfile = StringUtils.cleanPath(file.getOriginalFilename());
+            legumesFruits1.setPhoto(Image.save(file, nomfile));
 
 
             //legumesFruits1.setVideo(id_video);
            /* TypeLegumeFruit typelf = typeLegumeFruitRepository.findByType(type);
             legumesFruits1.setTypeLegumeFruit(typelf);*/
 
-            legumesFruits1.setTypeLegumeFruit(typeLegumeFruitRepository.findById(id).get());
+            legumesFruits1.setTypeLegumeFruit(typeLegumeFruitRepository.findByType(type));
 
             //recuperation de l'id de l'utilisateur connecté
-            User user = userService.hawa();
+            User user = userRepository.findById(iduser).get();
             legumesFruits1.setUser(user);
 
 
@@ -168,8 +171,8 @@ public class LegumesFruitsController {
             tutoriels1.setTitre(titre);
             tutoriels1.setDescription(descriptiont);
             tutoriels1.setEtatDeLaTerre(etatDeLaTerre);
-            tutoriels1.setSemis(semis);
-            tutoriels1.setBouture(bouture);
+            tutoriels1.setSemis(rtrr);
+            tutoriels1.setBouture(ettwy);
             tutoriels1.setEspacementEntreGraine(espacementEntreGraine);
             //tutoriels1.setHauteur(hauteur);
             //Pour enregistrer le tutoriel

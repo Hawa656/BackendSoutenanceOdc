@@ -29,9 +29,7 @@ public class LegumesFruits {
 
     private String arrosage;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private EperiodeNormal periodeNormal;
+    private String periodeNormal;
 
 
     @OneToOne

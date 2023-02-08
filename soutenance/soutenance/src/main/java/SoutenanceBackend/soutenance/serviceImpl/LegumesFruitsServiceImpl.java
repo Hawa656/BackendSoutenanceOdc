@@ -38,7 +38,7 @@ public class LegumesFruitsServiceImpl implements LegumesFruitsService {
                     lf.setDescription(legumesFruits.getDescription());
                     lf.setPhoto(legumesFruits.getPhoto());
                     lf.setDureeFloraisaon(legumesFruits.getDureeFloraisaon());
-                    lf.setPeriodeNormal(EperiodeNormal.Mars);
+                    lf.setPeriodeNormal(legumesFruits.getPeriodeNormal());
                     lf.setArrosage(legumesFruits.getArrosage());
 
                     return legumesFruitsRepository.save(lf);

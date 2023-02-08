@@ -40,6 +40,12 @@ public class VideoController {
         this.legumesFruitsRepository = legumesFruitsRepository;
     }
 
+    //°°°°°°°°°°°°°°°°°°°°°° LE NOMBRE DE VIDEO°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("/countVideo")
+    public long countVideo() {
+        return videoRepository.count();
+    }
+
     //°°°°°°°°°°°°°°°°°°°°°°FILTRER LES VIDEOS PAR LEGUME ET FRUIT°°°°°°°°°°°°°°°°°°°°°
     @GetMapping("/listeVideoLegume/{abasse}")
         public List<SoutenanceBackend.soutenance.Models.Video> filtrerParLegume(@PathVariable String abasse){
@@ -87,9 +93,10 @@ public class VideoController {
 
 
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UNE VIDEO°°°°°°°°°°°°°°°°°°°°°
-    @PostMapping("/Ajouter/{idLegumeFruit}")
+    @PostMapping("/Ajouter/{idLegumeFruit}/{idUser}")
     public String ajout(@RequestParam(value = "file")MultipartFile file,
                         @PathVariable long idLegumeFruit,
+                        @PathVariable long idUser,
                         @RequestParam(value = "videorecu") String videorecu) throws IOException {
     //recuperation de l
         String nomvideo = StringUtils.cleanPath(file.getOriginalFilename());
@@ -101,9 +108,10 @@ public class VideoController {
         SoutenanceBackend.soutenance.Models.Video video = new JsonMapper().readValue(videorecu, SoutenanceBackend.soutenance.Models.Video.class);
         video.setVideo(nomvideo);
         //recuperation de l'id de l'utilisateur connecté
-        User user = userService.hawa();
-        video.setUser(user);
+        //User user = userService.hawa();
+        //video.setUser(user);
         video.setLegumesFruits(new LegumesFruits(idLegumeFruit));
+        video.setUser(new User(idUser));
 
         try {
             videoService.creer(video);

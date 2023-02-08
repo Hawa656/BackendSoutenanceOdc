@@ -28,6 +28,19 @@ public class TacheController {
         this.tacheRepository = tacheRepository;
     }
 
+
+
+//===========================AJOUTER UNE TACHE
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @PostMapping("/ajoutTâche/{id}")
+    public Object creer(@RequestBody Tache tache, @PathVariable("id") User id) throws IOException {
+        tache.setUser(id);
+        tache.setEStatut(EStatut.valueOf("Encours"));
+
+        tacheService.creer(tache);
+        return "Tâche planifiée avec succès";
+    }
+
     //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UNE TÂCHE°°°°°°°°°°°°°°°°°°°°°
     @GetMapping("/lireTâche")
     public List<Tache> read(){

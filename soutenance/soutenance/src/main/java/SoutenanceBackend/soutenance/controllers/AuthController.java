@@ -67,6 +67,8 @@ public class AuthController {
 
 //  °°°°°°°°°°°°°°°AFFICHER LES UTILISATEURS°°°°°°°°°°°°°°°°°°°°°°°°
 
+  //  °°°°°°°°°°°°°°°AFFICHER LES UTILISATEURS°°°°°°°°°°°°°°°°°°°°°°°°
+
   @GetMapping("/listeUser")
   public List<User> read(){
     return userService.Afficher();

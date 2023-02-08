@@ -1,5 +1,6 @@
 package SoutenanceBackend.soutenance.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class Video {
 
     @OneToOne
     @JoinColumn(name = "id_legumesFruits")
+    @JsonIgnore
     private LegumesFruits legumesFruits;
 }

@@ -45,8 +45,8 @@ import java.util.Set;
     @Size(max = 20)
     private String numero;
 
-    @NotBlank
-    @Size(max = 50)
+//    @NotBlank
+//    @Size(max = 50)
     @Email
     private String email;
 

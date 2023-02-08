@@ -1,5 +1,6 @@
 package SoutenanceBackend.soutenance.services;
 
+import SoutenanceBackend.soutenance.Models.Role;
 import SoutenanceBackend.soutenance.Models.User;
 
 import java.util.List;
@@ -12,6 +13,11 @@ public interface UserService {
     List<User> Afficher();       // LA METHODE PERMETTANT D'AFFICHER UN UTILISATEUR
 
     User Ajouter(User utilisateur); // LA METHODE PERMETTANT D'AJOUTER UN UTILISATEUR
+    /*void AjouterUnRoleAunUtilisateur(String nomUtilisateur, String nomRole);
+
+    User RetournerUnUtilisateurParSonNom(String nomUtilisateur);
+
+    Role AjouterRole(Role role);*/
 
     User RecuperationDeIdDuUserConnecter(Long id_user);
 //    Recuperer par email

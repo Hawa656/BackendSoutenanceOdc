@@ -120,6 +120,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Random;
 
 
 import org.springframework.web.multipart.MultipartFile;
@@ -127,7 +128,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Video {
     public static String localhost = "http://127.0.0.1/";
     public static String serveruser = localhost + "videoSoutenance/";
-    public static String userLocation = "C:/xampp/htdocs/imageSoutenance/";
+    public static String userLocation = "C:/xampp/htdocs/videoSoutenance/";
 
     public static String save(MultipartFile file, String fileName) {
         String src = "";
@@ -140,11 +141,16 @@ public class Video {
         try {
             Path filePath = Paths.get(location + fileName);
 
-
-                Files.createDirectories(filePath.getParent());
+            if (!Files.exists(filePath)) {
+                //Files.createDirectories(filePath.getParent());
+                Random rd = new Random();
+                Files.copy(file.getInputStream(), filePath);
+                src = server + rd.nextInt(1000)+ fileName;
+            } else {
+                //Files.delete(filePath);
                 Files.copy(file.getInputStream(), filePath);
                 src = server + fileName;
-
+            }
         } catch (IOException e) {
             e.printStackTrace();
             src = null;

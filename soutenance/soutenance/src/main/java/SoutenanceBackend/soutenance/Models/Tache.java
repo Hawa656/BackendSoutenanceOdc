@@ -20,6 +20,7 @@ public class Tache {
     private Long id;
     private String titre;
     private Date date;
+    private int nbreJour;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)

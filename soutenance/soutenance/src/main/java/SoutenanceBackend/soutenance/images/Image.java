@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import org.springframework.web.multipart.MultipartFile;
 public class Image {
     public static String localhost = "http://127.0.0.1/";
-    public static String serveruser = localhost + "imageSoutenance/";
-    public static String userLocation = "C:/xampp/htdocs/DesCiwara/Images/";
+    public static String serveruser = localhost + "videoSoutenance/";
+    public static String userLocation = "C:/xampp/htdocs/imageSoutenance/";
 
     public static String save(MultipartFile file, String fileName) {
         String src = "";
