@@ -24,6 +24,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Boolean existsByEmail(String email);
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO `users` (`id`, `confirm_notification`, `email`, `nom`, `numero`, `password`, `prenom`) VALUES (NULL, b'0000', 'hawacoulibaly656@gmail.com', 'Coulibaly', '83014698', '12345678', 'Hawa');", nativeQuery = true)
-    void createAdminParDefaut();
+    @Query(value = "INSERT INTO `users` (`id`, `confirm_notification`, `email`, `nom`, `numero`, `password`, `prenom`) VALUES (NULL, b'0000', 'hawacoulibaly656@gmail.com', 'Coulibaly', '83014698', :password, 'Hawa');", nativeQuery = true)
+    void createAdminParDefaut(String password);
 }

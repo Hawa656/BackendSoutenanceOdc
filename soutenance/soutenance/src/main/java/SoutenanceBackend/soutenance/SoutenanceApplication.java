@@ -69,10 +69,16 @@ public class SoutenanceApplication implements CommandLineRunner {
 	}*/
 	@Override
 	public void run(String... args) throws Exception {
+		if (userRepository.findAll().size() == 0){
+
+			typeLegumeFruitRepository.creerTypeLegumeFruit();
+			String password = "12345678";
+
+			userRepository.createAdminParDefaut(encoder.encode(password));
+		}
 		if (roleRepository.findAll().size() == 0){
 			roleRepository.createRole();
-			typeLegumeFruitRepository.creerTypeLegumeFruit();
-			userRepository.createAdminParDefaut();
+			roleRepository.AddRoleToAdmin();
 		}
 
 	}

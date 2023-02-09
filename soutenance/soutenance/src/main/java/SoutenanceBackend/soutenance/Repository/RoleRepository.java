@@ -22,6 +22,11 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     @Query(value = "INSERT INTO roles (name) VALUES('ROLE_ADMIN'), ('ROLE_USER')", nativeQuery = true)
     void createRole();
 
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO user_roles (user_id,role_id) VALUES(1,1)", nativeQuery = true)
+    void AddRoleToAdmin();
+
 
 
 }
