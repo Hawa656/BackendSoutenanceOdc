@@ -102,9 +102,75 @@ public class LegumesFruitsController {
        return legumesFruitsService.modifier(id, legumesFruits);
     }
 
+//    MODIFIER AJOUT LEGUME FRUIT++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    @PostMapping("/Ajouterajoutfruilegume/{type}/{iduser}")
+    public Object ajoutfruilegume(@Param("nom") String nom,
+                                  @Param("description") String description,
+                                  @Param("arrosage") String arrosage,
+                                  @Param("periodeNormal") String periodeNormal,
+                                  @Param("dureeFloraisaon") String dureeFloraisaon,
+                                  @Param("file") MultipartFile file,
+                                  @Param("titre") String titre,
+                                  @Param("etape1") String etape1,
+                                  @Param("etape2") String etape2,
+                                  @Param("etape3") String etape3,
+                                  @Param("etatDeLaTerre") String etatDeLaTerre,
+                                  @Param("espacementEntreGraine") String espacementEntreGraine,
+                                  @PathVariable("type") String type,
+                                  @PathVariable("iduser") Long iduser){
+
+
+        LegumesFruits legumesFruits1 = new LegumesFruits();
+        legumesFruits1.setNom(nom);
+        legumesFruits1.setArrosage(arrosage);
+        legumesFruits1.setDureeFloraisaon(dureeFloraisaon);
+        legumesFruits1.setDescription(description);
+//        Boolean rtrr = Boolean.valueOf(semis);
+//        Boolean ettwy = Boolean.valueOf(bouture);
+
+        legumesFruits1.setPeriodeNormal(periodeNormal);
+
+        if(legumesFruitsRepository.findByNom(nom) == null){
+
+            String nomfile = StringUtils.cleanPath(file.getOriginalFilename());
+            legumesFruits1.setPhoto(Image.save(file, nomfile));
+
+
+
+            legumesFruits1.setTypeLegumeFruit(typeLegumeFruitRepository.findByType(type));
+
+            //recuperation de l'id de l'utilisateur connecté
+            User user = userRepository.findById(iduser).get();
+            legumesFruits1.setUser(user);
+
+
+
+            Tutoriels tutoriels1 = new Tutoriels();
+            tutoriels1.setTitre(titre);
+            tutoriels1.setEtape1(etape1);
+            tutoriels1.setEtatDeLaTerre(etatDeLaTerre);
+            tutoriels1.setEtape2(etape2);
+            tutoriels1.setEtape3(etape3);
+            tutoriels1.setEspacementEntreGraine(espacementEntreGraine);
+            //Pour enregistrer le tutoriel
+            legumesFruits1.setTutoriels(tutorielsService.creer(tutoriels1));
+
+            legumesFruitsService.creer(legumesFruits1);
+            return "Legume ou fruit ajouter avec succès";
+        }
+        else{
+            return "Legume ou fruit existe déja";
+
+        }
+
+
+    }
+    //   FIN MODIFIER AJOUT LEGUME FRUIT++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UN LEGUME OU FRUIT ET LE TUTORIEL °°°°°°°°°°°°°°°°°°°°°
     //@PreAuthorize(" hasRole('ADMIN')")
-    @PostMapping("/Ajouterajoutfruilegume/{type}/{iduser}")
+    /*@PostMapping("/Ajouterajoutfruilegume/{type}/{iduser}")
     public Object ajoutfruilegume(@Param("nom") String nom,
                                   @Param("description") String description, @Param("arrosage") String arrosage,
                                   @Param("periodeNormal") String periodeNormal, @Param("dureeFloraisaon") String dureeFloraisaon,
@@ -121,31 +187,6 @@ public class LegumesFruitsController {
         legumesFruits1.setDescription(description);
         Boolean rtrr = Boolean.valueOf(semis);
         Boolean ettwy = Boolean.valueOf(bouture);
-        /*if(periodeNormal.equals("Janvier")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Janvier);
-        }else if(periodeNormal.equals("Fevrier")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Fevrier);
-        }else if(periodeNormal.equals("Mars")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Mars);
-        }else if(periodeNormal.equals("Avril")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Avril);
-        }else if(periodeNormal.equals("Mai")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Mai);
-        }else if(periodeNormal.equals("Juin")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Juin);
-        }else if(periodeNormal.equals("Juillet")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Juillet);
-        }else if(periodeNormal.equals("Août")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Août);
-        }else if(periodeNormal.equals("Septembre")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Septembre);
-        }else if(periodeNormal.equals("Octobre")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Octobre);
-        }else if(periodeNormal.equals("Novembre")){
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Novembre);
-        }else {periodeNormal.equals("Decembre");
-            legumesFruits1.setPeriodeNormal(EperiodeNormal.Decembre);
-        }*/
 
         legumesFruits1.setPeriodeNormal(periodeNormal);
 
@@ -155,9 +196,6 @@ public class LegumesFruitsController {
             legumesFruits1.setPhoto(Image.save(file, nomfile));
 
 
-            //legumesFruits1.setVideo(id_video);
-           /* TypeLegumeFruit typelf = typeLegumeFruitRepository.findByType(type);
-            legumesFruits1.setTypeLegumeFruit(typelf);*/
 
             legumesFruits1.setTypeLegumeFruit(typeLegumeFruitRepository.findByType(type));
 
@@ -178,8 +216,8 @@ public class LegumesFruitsController {
             //Pour enregistrer le tutoriel
             legumesFruits1.setTutoriels(tutorielsService.creer(tutoriels1));
 
-            /*Tutoriels tuto = tutorielsRepository.findByTitre(titre);
-            legumesFruits1.setTutoriels(tuto);*/
+            *//*Tutoriels tuto = tutorielsRepository.findByTitre(titre);
+            legumesFruits1.setTutoriels(tuto);*//*
 
             legumesFruitsService.creer(legumesFruits1);
             return "Legume ajouter avec succès";
@@ -190,7 +228,11 @@ public class LegumesFruitsController {
         }
 
 
-    }
+    }*/
+
+
+
+
 
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
     /*@PostMapping("/Ajouter/{id_user}/{id_type}/{id_tutoriel}/{id_video}")

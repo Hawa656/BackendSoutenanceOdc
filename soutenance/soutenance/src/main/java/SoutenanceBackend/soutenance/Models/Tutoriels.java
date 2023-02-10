@@ -1,33 +1,42 @@
 package SoutenanceBackend.soutenance.Models;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
-
-@Entity
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Entity
+@Table(name = "tutoriels")
 public class Tutoriels {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titre;
-    @Size(max = 9000)
-    private String description;
-    //sous forme select
+    //@Size(max = 9000)
+    //pour que ça prennent plusieurs chaine de caractere de long text
+    @Lob
+    private String etape1;
+    //@Size(max = 9000)
+    @Lob
+    private String etape2;
+    //@Size(max = 9000)
+    @Lob
+    private String etape3;
     private  String etatDeLaTerre;
     private  String espacementEntreGraine;
-    private Boolean semis;
-    private  Boolean bouture;
-    //private String hauteur;
+//    @Size(max = 9000)
+//    private String description;
+    //sous forme select
+
+
+
+//    private Boolean semis;
+//    private  Boolean bouture;
+
 
 }
