@@ -1,12 +1,14 @@
 package SoutenanceBackend.soutenance.controllers;
 
 import SoutenanceBackend.soutenance.Models.Conseils;
+import SoutenanceBackend.soutenance.Models.User;
 import SoutenanceBackend.soutenance.Repository.ConseilsRepository;
 import SoutenanceBackend.soutenance.Repository.UserRepository;
 import SoutenanceBackend.soutenance.images.Image;
 import SoutenanceBackend.soutenance.images.Video;
 import SoutenanceBackend.soutenance.services.ConseilsService;
 import org.springframework.data.repository.query.Param;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,16 +51,23 @@ public class ConseilController {
         return conseilsService.modifier(id_user, conseils);
     }
 
-    @PostMapping("/Ajouter")
+    @PostMapping("/Ajouter/{idUser}")
     public String create(@Param("titre") String titre,
                         @Param("description") String description,
-                         @Param("file") MultipartFile file
+                         @Param("file") MultipartFile file,
+                         @PathVariable("idUser") Long idUser
                          ) throws IOException {
         Conseils conseils1 = new Conseils();
         conseils1.setTitre(titre);
         conseils1.setDescription(description);
 
-        conseils1.setPhoto(Image.save(file, conseils1.getPhoto()));
+        String nomfile = StringUtils.cleanPath(file.getOriginalFilename());
+        conseils1.setPhoto(Image.save(file, nomfile));
+
+        User user = userRepository.findById(idUser).get();
+        conseils1.setUser(user);
+
+//        conseils1.setPhoto(Image.save(file, conseils1.getPhoto()));
         conseilsService.creer(conseils1);
         return "conseil ajouter avec succès";
 }

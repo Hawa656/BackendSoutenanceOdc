@@ -31,8 +31,8 @@ public class LegumesFruits {
 
     private String periodeNormal;
 
-
-    @OneToOne
+//    POUR QUE LORSQU'ON SUPPRIME LEGUMEFRUIT ON SUPPRIME LE TUTORIEL QUI LUI EST ASSOCIE
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_tutoriel")
     private Tutoriels tutoriels;
 

@@ -27,6 +27,8 @@ public class Tutoriels {
     //@Size(max = 9000)
     @Lob
     private String etape3;
+    @Lob
+    private String etape4;
     private  String etatDeLaTerre;
     private  String espacementEntreGraine;
 //    @Size(max = 9000)

@@ -91,7 +91,17 @@ public class LegumesFruitsController {
 
     }
 
-    //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
+    //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER TUTORIEL ET LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
+//    @DeleteMapping("/supprimerlegumesFruits/{id}/{idTuto}")
+//    public String delete(@PathVariable Long id,@PathVariable Long idTuto){
+////        tutorielsService.supprimer(idTuto);
+////         legumesFruitsService.supprimer(id);
+//        LegumesFruits legumesFruits1 = new LegumesFruits();
+//        legumesFruitsService.supprimer(id,tutorielsService.supprimer(idTuto), legumesFruits1);
+//        return "legume ou fruit et le tutoriel associer avec succès";
+//    }
+
+    //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER UN LEGUME OU FRUIT AINSI QUE LE TUTORIEL (cascading ajouter au niveau du model legumeFruit permet de le faire)°°°°°°°°°°°°°°°°°°°°°
     @DeleteMapping("/supprimerlegumesFruits/{id}")
     public String delete(@PathVariable Long id){
         return legumesFruitsService.supprimer(id);
@@ -114,6 +124,7 @@ public class LegumesFruitsController {
                                   @Param("etape1") String etape1,
                                   @Param("etape2") String etape2,
                                   @Param("etape3") String etape3,
+                                  @Param("etape4") String etape4,
                                   @Param("etatDeLaTerre") String etatDeLaTerre,
                                   @Param("espacementEntreGraine") String espacementEntreGraine,
                                   @PathVariable("type") String type,
@@ -151,6 +162,7 @@ public class LegumesFruitsController {
             tutoriels1.setEtatDeLaTerre(etatDeLaTerre);
             tutoriels1.setEtape2(etape2);
             tutoriels1.setEtape3(etape3);
+            tutoriels1.setEtape4(etape4);
             tutoriels1.setEspacementEntreGraine(espacementEntreGraine);
             //Pour enregistrer le tutoriel
             legumesFruits1.setTutoriels(tutorielsService.creer(tutoriels1));
