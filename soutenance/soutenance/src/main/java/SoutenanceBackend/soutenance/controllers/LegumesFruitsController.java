@@ -112,6 +112,18 @@ public class LegumesFruitsController {
        return legumesFruitsService.modifier(id, legumesFruits);
     }
 
+    //  ++++++++++++  MODIFIER LEGUMEFRUIT ET TUTORIEL++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    /*@PutMapping("modifierLegumesFruitsEtTuto/{id}")
+    public LegumesFruits update(@PathVariable Long id, @RequestBody LegumesFruits legumesFruits){
+
+        LegumesFruits legumesFruits1 = new LegumesFruits();
+
+
+        Tutoriels tutoriels1 = new Tutoriels();
+        tutoriels1.
+        return legumesFruitsService.modifier(id, legumesFruits);
+    }*/
+
 //    MODIFIER AJOUT LEGUME FRUIT++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @PostMapping("/Ajouterajoutfruilegume/{type}/{iduser}")
     public Object ajoutfruilegume(@Param("nom") String nom,

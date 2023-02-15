@@ -104,6 +104,13 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /*    @Override
+    public User findByRoles(String roles) {
+        return userRepository.findByRoleName(roles);
+    }
+
+     */
+
     @Override
     public void updateUserPassword(User user, String newPassword) {
 

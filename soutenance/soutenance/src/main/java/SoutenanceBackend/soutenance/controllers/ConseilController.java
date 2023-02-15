@@ -41,14 +41,14 @@ public class ConseilController {
 
     }
     //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
-    @DeleteMapping("/supprimerConseil/{id_user}")
-    public String delete(@PathVariable Long id_user){
-        return conseilsService.supprimer(id_user);
+    @DeleteMapping("/supprimerConseil/{idConseil}")
+    public String delete(@PathVariable Long idConseil){
+        return conseilsService.supprimer(idConseil);
     }
     //°°°°°°°°°°°°°°°°°°°°°°MODIFIER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
-    @PutMapping("modifierConseil/{id_user}")
-    public Conseils update(@PathVariable Long id_user, @RequestBody Conseils conseils){
-        return conseilsService.modifier(id_user, conseils);
+    @PutMapping("modifierConseil/{idConseil}")
+    public Conseils update(@PathVariable Long idConseil, @RequestBody Conseils conseils){
+        return conseilsService.modifier(idConseil, conseils);
     }
 
     @PostMapping("/Ajouter/{idUser}")

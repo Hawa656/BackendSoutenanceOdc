@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -20,8 +21,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByNumeroOrEmail(String numero, String email);
 
     Boolean existsByNumero(String numero);
+    //User findByRoleName(String roleName);
 
     Boolean existsByEmail(String email);
+//    List<User> findByRolesRoleName(String roleName);
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO `users` (`id`, `confirm_notification`, `email`, `nom`, `numero`, `password`, `prenom`) VALUES (NULL, b'0000', 'hawacoulibaly656@gmail.com', 'Coulibaly', '83014698', :password, 'Hawa');", nativeQuery = true)

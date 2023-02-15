@@ -1,5 +1,6 @@
 package SoutenanceBackend.soutenance.controllers;
 
+import SoutenanceBackend.soutenance.Models.LegumesFruits;
 import SoutenanceBackend.soutenance.Models.Questions;
 import SoutenanceBackend.soutenance.Models.Reponses;
 import SoutenanceBackend.soutenance.Models.User;
@@ -31,6 +32,12 @@ public class QuestionsController {
     @GetMapping("/lireQuestion")
     public List<Questions> read(){
         return quesionsService.lire();
+
+    }
+    //°°°°°°°°°°°°°°°°°°°°°°LISTES DES QUESTIONS NON REPONDU°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("/ListeDesQuestionsNonRepondu")
+    public List<Questions> ListeDesQuestionsNonRepondu(){
+        return questionsRepository.ListeDesQuestionsNonRepondu();
 
     }
     //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER UNE QUESTION°°°°°°°°°°°°°°°°°°°°°

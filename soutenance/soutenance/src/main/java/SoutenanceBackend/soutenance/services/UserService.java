@@ -26,6 +26,8 @@ public interface UserService {
     User findByEmail(String userEmail);
     //Renitialiser le mot de passe
      void resetPassword(User user);
+//    List<User> findByRole(String roleName);
+    /*User findByRoles(String roles);*/
 
     public void updateUserPassword(User user, String newPassword);
 

@@ -16,6 +16,7 @@ import SoutenanceBackend.soutenance.serviceImpl.UserDetailsImpl;
 import SoutenanceBackend.soutenance.services.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -88,6 +89,21 @@ public class AuthController {
     user.setUsername(updateUser.getNumero());
     userRepository.save(user);
     return ResponseEntity.ok(new MessageResponse("Utilisateur modifier avec succès"));
+  }
+  //=============AFFICHER LA LISTES DES USERS A PARTIR DE LEURS ROLES==============
+
+  @PostMapping("/byRole")
+  public Set<User> getUsersByRole(@Param("roles") String roles) {
+    if(roles.equals("user")){
+      Role role = roleRepository.findByName(ERole.ROLE_USER).get();
+     return role.getUsers();
+    } else if (roles.equals("admin")) {
+      Role role = roleRepository.findByName(ERole.ROLE_ADMIN).get();
+      return role.getUsers();
+    }else {
+      return null;
+    }
+
   }
 
 
