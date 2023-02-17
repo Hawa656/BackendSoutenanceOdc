@@ -12,11 +12,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/questions")
-@CrossOrigin(origins = "http://localhost:8100")
+@CrossOrigin(origins = {"http://localhost:8100","http://localhost:4200"})
 public class QuestionsController {
     private QuesionsService quesionsService;
     private QuestionsRepository questionsRepository;
@@ -26,6 +27,11 @@ public class QuestionsController {
         this.quesionsService = quesionsService;
         this.questionsRepository = questionsRepository;
         this.userRepository = userRepository;
+    }
+
+    @GetMapping("RecupererIdQuestion/{idQuestion}")
+    public Questions RecupererId(@PathVariable("idQuestion") Long idQuestion){
+        return quesionsService.RecupereIdQuestion(idQuestion);
     }
 
     //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UNE QUESTION°°°°°°°°°°°°°°°°°°°°°
@@ -52,16 +58,18 @@ public class QuestionsController {
         return quesionsService.modifier(id_user,questions);
     }
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UNE QUESTION°°°°°°°°°°°°°°°°°°°°°
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @PostMapping("/ajouterQuestion/{id_user}")
     public Object create(@PathVariable User id_user,
-            @Param("question") String question) throws IOException {
+                         @Param("question") String question) throws IOException {
         Questions questions1 = new Questions();
         questions1.setQuestion(question);
 
         questions1.setUser(id_user);
+        questions1.setTimestamp(LocalDateTime.now()); // Ajouter la date et l'heure actuelles
 
         quesionsService.creer(questions1);
-        return "Question ajouter avec succès";
+        return "Question ajoutée avec succès";
     }
+
 }

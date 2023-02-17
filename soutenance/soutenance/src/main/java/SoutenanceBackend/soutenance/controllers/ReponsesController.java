@@ -14,9 +14,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = {"http://localhost:8100","http://localhost:4200"})
 @RestController
 @RequestMapping("/reponses")
 
@@ -25,10 +28,11 @@ public class ReponsesController {
     private ReponsesService reponsesService;
     private UserRepository userRepository;
 
+    private final QuestionsRepository questionsRepository;
+
     @Autowired
     private UserService userService;
 
-    private QuestionsRepository questionsRepository;
 
     public ReponsesController(ReponsesRepository reponsesRepository, ReponsesService reponsesService, UserRepository userRepository, QuestionsRepository questionsRepository) {
         this.reponsesRepository = reponsesRepository;
@@ -38,7 +42,7 @@ public class ReponsesController {
     }
 
     //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UNE REPONSE°°°°°°°°°°°°°°°°°°°°°
-    @GetMapping("/lireReponses{id_question}")
+    @GetMapping("/lireReponses")
     public List<Reponses> read(){
         return reponsesService.lire();
 
@@ -56,8 +60,8 @@ public class ReponsesController {
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    @PostMapping("/ajouter/{idquestion}")
-    public Object create(
+    @PostMapping("/ajouter/{idquestion}/{idUser}")
+    public Object create(@PathVariable User idUser,
                          @PathVariable("idquestion")  Long idquestion,
                          @Param("reponse") String reponse) throws IOException {
         Reponses reponses1 = new Reponses();
@@ -66,13 +70,23 @@ public class ReponsesController {
 
         Questions idQuestion = questionsRepository.getReferenceById(idquestion);
         reponses1.setQuestions(idQuestion);
+        reponses1.setUser(idUser);
+        reponses1.setTimestamp(LocalDateTime.now()); // Ajouter la date et l'heure actuelles
 
-        User user = userService.hawa();
-        reponses1.setUser(user);
+        //User user = userService.hawa();
+        //reponses1.setUser(user);
         if (idQuestion==null){
             return "Pas de question correspondante";
         }
         reponsesService.creer(reponses1);
         return "Rponses ajouter avec succès";
+    }
+
+    //°°°°°°°°°°°°°°°°°°°°°°AFFICHER LIST REPONSE PAR QUESTION°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("/lireReponsesParQuestion/{id_question}")
+    public List<Reponses> lireReponsesParQuestion(@PathVariable("id_question") Long id_question){
+        //Questions questions = questionsRepository.getReferenceById(id_question);
+        return reponsesRepository.AfficherReponseParQuestion(id_question);
+
     }
 }

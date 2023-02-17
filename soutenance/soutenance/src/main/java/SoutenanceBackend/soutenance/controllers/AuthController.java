@@ -127,7 +127,9 @@ public class AuthController {
     return ResponseEntity.ok(new JwtResponse(jwt,
                          userDetails.getId(), 
                          userDetails.getUsername(), 
-                         userDetails.getEmail(), 
+                         userDetails.getEmail(),
+                         userDetails.getNom(),
+            userDetails.getPrenom(),
                          roles));
   }
   //°°°°°°°°°°°°°°°°°°°°°°°°CREER UN COMPTE°°°°°°°°°°°°°°°°°°°°°°°°°°°°
@@ -200,15 +202,84 @@ public class AuthController {
     }
 
   }
+
+
+
+
+
   //=============AJOUTER UN ADMIN PAR UN ADMIN===================
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("/ajouterUnAdmin/{idUser}")
-  public String creer(@RequestBody User user, @PathVariable ("idUser") User idUser){
-    User user1 = userService.hawa();
+  public ResponseEntity<?> AjouterAdminParAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
+    if (userRepository.existsByNumero(signUpRequest.getNumero())) {
+      return ResponseEntity
+              .badRequest()
+              .body(new MessageResponse("Erreur: Ce numero existe déjà!"));
+    }
 
-    userService.Ajouter(user);
-    return "Administrateur ajouté avec succès";
+    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+      return ResponseEntity
+              .badRequest()
+              .body(new MessageResponse("Erreur: Ce email existe déjà!"));
+    }
+
+
+    // Create new user's account
+    if (signUpRequest.getPassword().equals(signUpRequest.getConfirmpassword())){
+      User user = new User(signUpRequest.getNumero(),
+              signUpRequest.getEmail(),
+              encoder.encode(signUpRequest.getPassword()), signUpRequest.getNom(), signUpRequest.getPrenom());
+
+      Set<String> strRoles = signUpRequest.getRole();
+      Set<Role> roles = new HashSet<>();
+
+      if (strRoles == null) {
+        Role userRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                .orElseThrow(() -> new RuntimeException("Erreur: Role is not found."));
+        roles.add(userRole);
+      } else {
+        strRoles.forEach(role -> {
+          switch (role) {
+            case "admin":
+              Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                      .orElseThrow(() -> new RuntimeException("Erreur: Role is not found."));
+              roles.add(adminRole);
+
+              break;
+
+            default:
+              Role userRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                      .orElseThrow(() -> new RuntimeException("Erreur: Role is not found."));
+              roles.add(userRole);
+          }
+        });
+      }
+
+      user.setRoles(roles);
+      user.setNom(signUpRequest.getNom());
+      user.setPrenom(signUpRequest.getPrenom());
+      //user.setUsername(signUpRequest.getUsername());
+      user.setNumero(signUpRequest.getNumero());
+      user.setConfirmNotification(signUpRequest.getConfirmNotification());
+      System.out.println(user.getRoles().contains("cvhbjnklmkjhgbvvvvvvvvvvvvvvvvhhhhhh  "  + roleRepository.findByName(ERole.ROLE_ADMIN)));
+      if(user.getRoles().contains(roleRepository.findByName(ERole.ROLE_ADMIN))){
+        System.out.println();
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository.save(user);
+        mailSender.send(emailConstructor.constructNewUserEmail(user));
+      }else {
+        userRepository.save(user);
+      }
+
+
+      return ResponseEntity.ok(new MessageResponse("Utilisateur enregistrer avec succès!"));
+    }else {
+      return ResponseEntity.badRequest().body(new MessageResponse("Les mots de passe ne sont les pas mêmes "));
+    }
+
   }
+
+
 
   //°°°°°°°°°°°°°°°°°°°°°°°°°REINITIALISER PASSWORD°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 

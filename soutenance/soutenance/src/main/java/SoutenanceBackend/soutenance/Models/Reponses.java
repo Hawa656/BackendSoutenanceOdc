@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -17,6 +18,7 @@ public class Reponses {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String reponse;
+    private LocalDateTime timestamp;
 
     @ManyToOne
     private Questions questions;

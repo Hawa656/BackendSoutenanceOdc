@@ -90,6 +90,16 @@ public class UserDetailsImpl implements UserDetails {
         return numero;
     }
 
+
+    public String getNom() {
+        return nom;
+    }
+
+
+    public String getPrenom() {
+        return prenom;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

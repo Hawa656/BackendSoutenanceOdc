@@ -19,6 +19,7 @@ public class Tache {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titre;
+    private Boolean statut;
     private Date date;
     private int nbreJour;
 

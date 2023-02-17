@@ -20,6 +20,7 @@ public class PostNotification {
     @Autowired
     private NotificationsRepository notificationsRepository;
 
+    //@Scheduled(fixedRate = 86400000)
     @Scheduled(fixedRate = 86400000)
     public void createNotificationsForTasksDueToday() {
         LocalDate today = LocalDate.now();
@@ -27,8 +28,9 @@ public class PostNotification {
         for (Tache task : alltaches) {
             int days = task.getNbreJour();
             LocalDate dueDate = today.plusDays(days);
-            if (dueDate.equals(today)) {
+            if (task != null) {
                 Notifications notifications = new Notifications();
+                notifications.setTitreNotif(task.getTitre());
                 notifications.setTache(task);
                 notifications.setUser(task.getUser());
                 notificationsRepository.save(notifications);

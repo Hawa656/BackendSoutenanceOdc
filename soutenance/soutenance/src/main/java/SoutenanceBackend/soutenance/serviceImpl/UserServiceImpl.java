@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserbyId(Long id) {
+        return userRepository.findUserById(id);
+    }
+
+    @Override
     public String Modifier(Long id,User users) {
         return null;
     }

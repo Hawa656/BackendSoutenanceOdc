@@ -49,4 +49,9 @@ public class QuesionsServiceImpl implements QuesionsService {
          questionsRepository.deleteById(id);
         return "Question supprimer avec sucès";
     }
+
+    @Override
+    public Questions RecupereIdQuestion(Long idQuestion) {
+        return questionsRepository.findById(idQuestion).get();
+    }
 }
