@@ -28,6 +28,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
 //    List<User> findByRolesRoleName(String roleName);
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO `users` (`id`, `confirm_notification`, `email`, `nom`, `numero`, `password`, `prenom`) VALUES (NULL, b'0000', 'hawacoulibaly656@gmail.com', 'Coulibaly', '83014698', :password, 'Hawa');", nativeQuery = true)
+    @Query(value = "INSERT INTO `users` (`id`, `confirm_notification`, `email`, `nom`, `numero`, `password`, `prenom`) VALUES (NULL, b'0000', 'hawacoulibaly@gmail.com', 'Coulibaly', '83014698', :password, 'Hawa');", nativeQuery = true)
     void createAdminParDefaut(String password);
 }

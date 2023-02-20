@@ -287,7 +287,7 @@ public class AuthController {
   public ResponseEntity<String> resetPassword(@PathVariable("email") String email) {
     User user = userService.findByEmail(email);
     if (user == null) {
-      return new ResponseEntity<String>("Email non fourni", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>( HttpStatus.BAD_REQUEST);
     }
     userService.resetPassword(user);
     return new ResponseEntity<String>("Email envoyé!", HttpStatus.OK);

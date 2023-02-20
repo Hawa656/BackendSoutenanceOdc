@@ -1,6 +1,7 @@
 package SoutenanceBackend.soutenance.services;
 
 import SoutenanceBackend.soutenance.Models.LegumesFruits;
+import SoutenanceBackend.soutenance.Models.Tutoriels;
 
 import java.util.List;
 

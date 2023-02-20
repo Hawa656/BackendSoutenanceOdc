@@ -2,7 +2,10 @@ package SoutenanceBackend.soutenance.serviceImpl;
 
 import SoutenanceBackend.soutenance.Models.EperiodeNormal;
 import SoutenanceBackend.soutenance.Models.LegumesFruits;
+import SoutenanceBackend.soutenance.Models.Tutoriels;
+import SoutenanceBackend.soutenance.Models.TypeLegumeFruit;
 import SoutenanceBackend.soutenance.Repository.LegumesFruitsRepository;
+import SoutenanceBackend.soutenance.Repository.TypeLegumeFruitRepository;
 import SoutenanceBackend.soutenance.services.LegumesFruitsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +16,12 @@ import java.util.List;
 public class LegumesFruitsServiceImpl implements LegumesFruitsService {
 
     private LegumesFruitsRepository legumesFruitsRepository;
+    private final TypeLegumeFruitRepository typeLegumeFruitRepository;
 
-    public LegumesFruitsServiceImpl(LegumesFruitsRepository legumesFruitsRepository) {
+    public LegumesFruitsServiceImpl(LegumesFruitsRepository legumesFruitsRepository,
+                                    TypeLegumeFruitRepository typeLegumeFruitRepository) {
         this.legumesFruitsRepository = legumesFruitsRepository;
+        this.typeLegumeFruitRepository = typeLegumeFruitRepository;
     }
 
     @Override
@@ -31,7 +37,8 @@ public class LegumesFruitsServiceImpl implements LegumesFruitsService {
 
     @Override
     public LegumesFruits modifier(Long id, LegumesFruits legumesFruits) {
-
+        Tutoriels tutoriels = new Tutoriels();
+        TypeLegumeFruit typeLegumeFruit= new TypeLegumeFruit();
         return legumesFruitsRepository.findById(id)
                 .map(lf ->{
                     lf.setNom(legumesFruits.getNom());
@@ -40,7 +47,8 @@ public class LegumesFruitsServiceImpl implements LegumesFruitsService {
                     lf.setDureeFloraisaon(legumesFruits.getDureeFloraisaon());
                     lf.setPeriodeNormal(legumesFruits.getPeriodeNormal());
                     lf.setArrosage(legumesFruits.getArrosage());
-
+                    lf.setTutoriels(tutoriels);
+                    lf.setTypeLegumeFruit(typeLegumeFruit);
                     return legumesFruitsRepository.save(lf);
                 } ).orElseThrow(() -> new RuntimeException("legume ou fruit non trouve"));
 

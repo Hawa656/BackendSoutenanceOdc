@@ -93,6 +93,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/tuto/lireTutoriel/**").permitAll()
                 .antMatchers("/api/questions/ListeDesQuestionsNonRepondu/**").permitAll()
                 .antMatchers("/api/questions/**").permitAll()
+                .antMatchers("/api/reponses/**").permitAll()
+                .antMatchers("/api/tache/**").permitAll()
 
 
 

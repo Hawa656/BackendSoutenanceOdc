@@ -58,7 +58,4 @@ public class LegumesFruits {
         this.id = idLegumeFruit;
     }
 
-//
-//    @OneToOne
-//    private Video video;
 }

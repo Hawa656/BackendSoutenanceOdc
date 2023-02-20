@@ -59,7 +59,7 @@ public class ReponsesController {
         return reponsesService.modifier(id_question, reponses);
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+
     @PostMapping("/ajouter/{idquestion}/{idUser}")
     public Object create(@PathVariable User idUser,
                          @PathVariable("idquestion")  Long idquestion,

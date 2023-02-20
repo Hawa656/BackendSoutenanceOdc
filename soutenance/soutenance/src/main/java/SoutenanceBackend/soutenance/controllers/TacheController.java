@@ -40,7 +40,7 @@ public class TacheController {
 
 
 //===========================AJOUTER UNE TACHE
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+
     @PostMapping("/ajouttache/{id}")
     public Object creer(@RequestBody Tache tache, @PathVariable("id") User id) throws IOException {
         tache.setUser(id);

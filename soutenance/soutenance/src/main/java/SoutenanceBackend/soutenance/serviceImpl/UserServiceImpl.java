@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void resetPassword(User user) {
-        String password = RandomStringUtils.randomAlphanumeric(4);
+        String password = RandomStringUtils.randomAlphanumeric(8);
         String passwordCrypte = bCryptPasswordEncoder.encode(password);
         user.setPassword(passwordCrypte);
         userRepository.save(user);
