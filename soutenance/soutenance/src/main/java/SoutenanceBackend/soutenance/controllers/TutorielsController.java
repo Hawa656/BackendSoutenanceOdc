@@ -25,9 +25,11 @@ public class TutorielsController {
         this.legumesFruitsRepository = legumesFruitsRepository;
     }
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UN TUTORIEL°°°°°°°°°°°°°°°°°°°°°
-    @PostMapping("/AjouterTutoriel")
-    public String create(@RequestBody Tutoriels tutoriels){
-            tutorielsService.creer(tutoriels);
+    @PostMapping("/AjouterTutoriel/{idLegumeFruit}")
+    public String create(@RequestBody Tutoriels tutoriels,@PathVariable("idLegumeFruit") LegumesFruits idLegumeFruit){
+        tutoriels.setTitre(tutoriels.getTitre());
+        tutoriels.setEspacementEntreGraine(tutoriels.getEspacementEntreGraine());
+        tutorielsService.creer(tutoriels);
             return "tutoriel ajouter avec succès";
 
         }
