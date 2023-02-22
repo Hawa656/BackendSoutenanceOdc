@@ -25,7 +25,7 @@ public class Tache {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private EStatut eStatut;
+    //private EStatut eStatut;
 
     @ManyToOne
     private User user;

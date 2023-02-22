@@ -43,7 +43,7 @@ public class LegumesFruits {
 
     @OneToOne
     @JoinColumn(name = "id_video")
-    private Video legume;
+    private Video video;
 
     @ManyToOne
     private User user;

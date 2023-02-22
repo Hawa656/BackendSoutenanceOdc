@@ -47,4 +47,9 @@ public class TutorielsServiceImpl implements TutorielsService {
 
         return "supprimer avec succès";
     }
+
+    @Override
+    public Tutoriels RecupereIdTuto(Long idTuto) {
+        return tutorielsRepository.findById(idTuto).get();
+    }
 }

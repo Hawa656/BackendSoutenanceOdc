@@ -24,9 +24,14 @@ public class TutorielsController {
         this.legumesFruitsService = legumesFruitsService;
         this.legumesFruitsRepository = legumesFruitsRepository;
     }
+    //°°°°°°°°°°°°°°°°°°°°°°RECUPERER UN TUTORIEL PAR SON ID°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("RecupererIdTutoriel/{idTuto}")
+    public Tutoriels RecupererId(@PathVariable("idTuto") Long idTuto){
+        return tutorielsService.RecupereIdTuto(idTuto);
+    }
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UN TUTORIEL°°°°°°°°°°°°°°°°°°°°°
-    @PostMapping("/AjouterTutoriel/{idLegumeFruit}")
-    public String create(@RequestBody Tutoriels tutoriels,@PathVariable("idLegumeFruit") LegumesFruits idLegumeFruit){
+    @PostMapping("/AjouterTutoriel")
+    public String create(@RequestBody Tutoriels tutoriels){
         tutoriels.setTitre(tutoriels.getTitre());
         tutoriels.setEspacementEntreGraine(tutoriels.getEspacementEntreGraine());
         tutorielsService.creer(tutoriels);

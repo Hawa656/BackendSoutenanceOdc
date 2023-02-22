@@ -3,19 +3,15 @@ package SoutenanceBackend.soutenance.controllers;
 import SoutenanceBackend.soutenance.Models.*;
 import SoutenanceBackend.soutenance.Repository.*;
 import SoutenanceBackend.soutenance.images.Image;
-import SoutenanceBackend.soutenance.images.Video;
 import SoutenanceBackend.soutenance.services.LegumesFruitsService;
 import SoutenanceBackend.soutenance.services.TutorielsService;
 import SoutenanceBackend.soutenance.services.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,6 +35,8 @@ public class LegumesFruitsController {
     private TutorielsRepository tutorielsRepository;
     @Autowired
     private EtapeRepository etapeRepository;
+    @Autowired
+    private VideoRepository videoRepository;
 
 
     @GetMapping("RecupererIdLegumeFruit/{idlegumefruit}")
@@ -56,6 +54,61 @@ public class LegumesFruitsController {
         this.tutorielsRepository = tutorielsRepository;
     }
 
+
+    @PostMapping("/Ajouterajoutfruilegume/{type}/{idTuto}/{iduser}")
+    public Object ajoutfruilegume(@Param("nom") String nom,
+                                  @Param("description") String description,
+                                  @Param("arrosage") String arrosage,
+                                  @Param("periodeNormal") String periodeNormal,
+                                  @Param("dureeFloraisaon") String dureeFloraisaon,
+                                  @Param("file") MultipartFile file,
+                                  @PathVariable("type") String type,
+                                  @PathVariable("idTuto") Long idTuto,
+                                  //@PathVariable("idVideo") Long idVideo,
+                                  @PathVariable("iduser") Long iduser){
+
+
+
+        LegumesFruits legumesFruits1 = new LegumesFruits();
+        //if (idVideo == null) {
+           // return legumesFruits1.setVideo();
+        //}
+        legumesFruits1.setNom(nom);
+        legumesFruits1.setArrosage(arrosage);
+        legumesFruits1.setDureeFloraisaon(dureeFloraisaon);
+        legumesFruits1.setDescription(description);
+        legumesFruits1.setPeriodeNormal(periodeNormal);
+
+        if(legumesFruitsRepository.findByNom(nom) == null){
+
+            String nomfile = StringUtils.cleanPath(file.getOriginalFilename());
+            legumesFruits1.setPhoto(Image.save(file, nomfile));
+
+
+
+            legumesFruits1.setTypeLegumeFruit(typeLegumeFruitRepository.findByType(type));
+
+            //recuperation de l'id de l'utilisateur connecté
+            User user = userRepository.findById(iduser).get();
+            legumesFruits1.setUser(user);
+            //Video video= videoRepository.findById(idVideo).get();
+
+            //legumesFruits1.setVideo(video);
+            Tutoriels tutoriels = tutorielsRepository.findById(idTuto).get();
+            legumesFruits1.setTutoriels(tutoriels);
+
+            legumesFruitsService.creer(legumesFruits1);
+            return "Legume ajouter avec succès";
+        }
+        else{
+            return "Legume existe déja";
+
+        }
+
+
+    }
+
+
    /* @PostMapping("/AjouterLegumesFruits/{id_user}")
     public String create(@RequestBody LegumesFruits legumesFruits, @PathVariable("id_user") Long id_user){
      //   Optional<User> user = userRepository.findById(id_user);
@@ -72,6 +125,51 @@ public class LegumesFruitsController {
 
 
     }*/
+   //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UN LEGUME OU FRUIT ET LE TUTORIEL °°°°°°°°°°°°°°°°°°°°°
+   //@PreAuthorize(" hasRole('ADMIN')")
+   /*@PostMapping("/Ajouterajoutfruilegume/{type}/{iduser}")
+   public Object ajoutfruilegume(@Param("nom") String nom,
+                                 @Param("description") String description,
+                                 @Param("arrosage") String arrosage,
+                                 @Param("periodeNormal") String periodeNormal,
+                                 @Param("dureeFloraisaon") String dureeFloraisaon,
+                                 @Param("file") MultipartFile file,
+                                 @PathVariable("type") String type,
+                                 @PathVariable("iduser") Long iduser){
+
+
+       LegumesFruits legumesFruits1 = new LegumesFruits();
+       legumesFruits1.setNom(nom);
+       legumesFruits1.setArrosage(arrosage);
+       legumesFruits1.setDureeFloraisaon(dureeFloraisaon);
+       legumesFruits1.setDescription(description);
+       legumesFruits1.setPeriodeNormal(periodeNormal);
+
+       if(legumesFruitsRepository.findByNom(nom) == null){
+
+           String nomfile = StringUtils.cleanPath(file.getOriginalFilename());
+           legumesFruits1.setPhoto(Image.save(file, nomfile));
+
+
+
+           legumesFruits1.setTypeLegumeFruit(typeLegumeFruitRepository.findByType(type));
+
+           //recuperation de l'id de l'utilisateur connecté
+           User user = userRepository.findById(iduser).get();
+           legumesFruits1.setUser(user);
+
+           legumesFruitsService.creer(legumesFruits1);
+           return "Legume ajouter avec succès";
+       }
+       else{
+           return "Legume existe déja";
+
+       }
+
+
+   }
+*/
+
     //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
     @GetMapping("/lireLegumesFruits")
 
@@ -262,50 +360,6 @@ public class LegumesFruitsController {
     }*/
     //   FIN MODIFIER AJOUT LEGUME FRUIT++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
-    //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UN LEGUME OU FRUIT ET LE TUTORIEL °°°°°°°°°°°°°°°°°°°°°
-    //@PreAuthorize(" hasRole('ADMIN')")
-    @PostMapping("/Ajouterajoutfruilegume/{type}/{iduser}")
-    public Object ajoutfruilegume(@Param("nom") String nom,
-                                  @Param("description") String description,
-                                  @Param("arrosage") String arrosage,
-                                  @Param("periodeNormal") String periodeNormal,
-                                  @Param("dureeFloraisaon") String dureeFloraisaon,
-                                  @Param("file") MultipartFile file,
-                                  @PathVariable("type") String type,
-                                  @PathVariable("iduser") Long iduser){
-
-
-        LegumesFruits legumesFruits1 = new LegumesFruits();
-        legumesFruits1.setNom(nom);
-        legumesFruits1.setArrosage(arrosage);
-        legumesFruits1.setDureeFloraisaon(dureeFloraisaon);
-        legumesFruits1.setDescription(description);
-        legumesFruits1.setPeriodeNormal(periodeNormal);
-
-        if(legumesFruitsRepository.findByNom(nom) == null){
-
-            String nomfile = StringUtils.cleanPath(file.getOriginalFilename());
-            legumesFruits1.setPhoto(Image.save(file, nomfile));
-
-
-
-            legumesFruits1.setTypeLegumeFruit(typeLegumeFruitRepository.findByType(type));
-
-            //recuperation de l'id de l'utilisateur connecté
-            User user = userRepository.findById(iduser).get();
-            legumesFruits1.setUser(user);
-
-            legumesFruitsService.creer(legumesFruits1);
-            return "Legume ajouter avec succès";
-        }
-        else{
-            return "Legume existe déja";
-
-        }
-
-
-    }
 
 
 

@@ -36,27 +36,40 @@ public class EtapeController {
         this.legumesFruitsRepository = legumesFruitsRepository;
     }
 
+
+
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UNE ETAPE°°°°°°°°°°°°°°°°°°°°°
     @PostMapping("/ajouterEtape/{idTuto}")
-    public String create(@Valid @RequestParam(value = "etape") String etape,
-                         @Valid @Param(value="file") MultipartFile file, @PathVariable("idTuto") Tutoriels idTuto) throws JsonProcessingException {
-       String img= "img";
+    public String create(@Param("etape") String etape,
+                         @Param(value = "titre") String titre,
+                         @Param(value="file") MultipartFile file,
+                         @PathVariable("idTuto") Tutoriels idTuto) throws JsonProcessingException {
+
+        if (titre == null) {
+            return "Le titre est manquant";
+        }
 
 
+        String img= "img";
+
+
+        //String nomfile = StringUtils.cleanPath(file.getOriginalFilename());
         String nomfile = StringUtils.cleanPath(file.getOriginalFilename());
-        Etape etape2= new JsonMapper().readValue(etape,Etape.class);
+        Etape etape2= new Etape();
         etape2.setPhoto(Image.save(file, nomfile));
+        etape2.setEtape(etape);
+        etape2.setTitre(titre); // Ajouter le titre à l'objet Etape
 
         etape2.setTutoriels(idTuto);
         etapeService.creer(etape2);
-        return " ajouter avec succès";
+        return "Etape ajouter avec succès";
 
     }
     //====================Liste des etapes d'un tutoriel=============
 
-    @GetMapping("/etapesParTuto")
-    public List<Etape> getEtapesByTutoriels() {
-        return etapeRepository.findByTutorielsIsNotNull();
+    @GetMapping("/etapesParTuto/{tutoriels}")
+    public List<Etape> getEtapesByTutoriels(@PathVariable("tutoriels") Tutoriels tutoriels) {
+        return etapeRepository.findByTutoriels(tutoriels);
     }
 
 }
