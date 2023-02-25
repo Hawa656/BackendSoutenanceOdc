@@ -1,13 +1,12 @@
 package SoutenanceBackend.soutenance.controllers;
 
-import SoutenanceBackend.soutenance.Models.EStatut;
-import SoutenanceBackend.soutenance.Models.PostNotification;
-import SoutenanceBackend.soutenance.Models.Tache;
-import SoutenanceBackend.soutenance.Models.User;
+import SoutenanceBackend.soutenance.Models.*;
 import SoutenanceBackend.soutenance.Repository.NotificationsRepository;
 import SoutenanceBackend.soutenance.Repository.TacheRepository;
 import SoutenanceBackend.soutenance.services.TacheService;
 import SoutenanceBackend.soutenance.services.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,8 +45,21 @@ public class TacheController {
         tache.setUser(id);
         tache.setEStatut(EStatut.valueOf("Encours"));
 
+
          tacheService.creer(tache);
         return "Tâche planifiée avec succès";
+    }
+
+    @GetMapping("/lireTaheUserConecter/{idUser}")
+    public ResponseEntity<?> lireTaheUserConecter(@PathVariable Long idUser){
+
+
+
+        List<Tache>tacheListes = tacheService.lireTawheUserConecter(idUser);
+
+
+        return new ResponseEntity<>(tacheListes, HttpStatus.OK);
+
     }
 
     //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UNE TÂCHE°°°°°°°°°°°°°°°°°°°°°
@@ -68,8 +80,8 @@ public class TacheController {
         return tacheService.modifier(id_Tache, tache);
     }
     //°°°°°°°°°°°°°°°°°°°°°°AJOUTER UNE TÂCHE°°°°°°°°°°°°°°°°°°°°°
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    @PostMapping("/ajouterTache/{id}")
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    /*@PostMapping("/ajouterTache/{id}")
     public Object create(@RequestBody Tache tache, @PathVariable("id") User id) throws IOException {
 //        Notification notification1 = new Notification();
 //        notification1.setTitre();
@@ -81,10 +93,10 @@ public class TacheController {
 
         tacheService.creer(tache);
         return "Tâche planifiée avec succès";
-    }
+    }*/
 
 
-    @PostMapping("/updateDate")
+   /* @PostMapping("/updateDate")
     public Tache updateDate(@RequestBody Tache date){
         Tache tache1 = tacheService.getDateExit(date.getDate());
 
@@ -96,6 +108,6 @@ public class TacheController {
         }
         tache1.setEStatut(EStatut.valueOf("Encours"));
         return tacheService.creer(tache1);
-    }
+    }*/
 
 }

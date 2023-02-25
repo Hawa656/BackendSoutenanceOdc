@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 
@@ -17,11 +19,17 @@ import java.util.Date;
 public class Tache {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    /*private Long id;
     private String titre;
     private Boolean statut;
     private Date date;
-    private int nbreJour;
+    private int nbreJour;*/
+
+    private Long id;
+    private String titre;
+    //private Boolean statut;
+    private LocalDate dateAcitivte;
+    private LocalTime heureNotif;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)

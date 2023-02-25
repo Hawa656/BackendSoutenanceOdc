@@ -7,6 +7,7 @@ import SoutenanceBackend.soutenance.Repository.UserRepository;
 import SoutenanceBackend.soutenance.services.TacheService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -44,10 +45,9 @@ public class TacheServiceImpl implements TacheService {
 
         return tacheRepository.findById(id)
                 .map(n ->{
-                    n.setDate(tache.getDate());
+                    n.setDateAcitivte(tache.getDateAcitivte());
                     n.setTitre(tache.getTitre());
-
-
+                    n.setHeureNotif(tache.getHeureNotif());
                     return tacheRepository.save(n);
                 } ).orElseThrow(() -> new RuntimeException("notification non trouvé"));
 
@@ -62,7 +62,12 @@ public class TacheServiceImpl implements TacheService {
     }
 
     @Override
-    public Tache getDateExit(Date date) {
-        return tacheRepository.findByDate(date);
+    public List<Tache> lireTawheUserConecter(Long idUser) {
+        return tacheRepository.ListeTache(idUser);
     }
+
+ /*   @Override
+    public Tache getDateExit(LocalDate date) {
+        return tacheRepository.findByDateAcitivte(date);
+    }*/
 }
