@@ -97,6 +97,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/tache/**").permitAll()
                 .antMatchers("/api/tuto/**").permitAll()
                 .antMatchers("/api/etape/**").permitAll()
+                .antMatchers("/api/notification/**").permitAll()
 
 
 

@@ -71,6 +71,7 @@ public class ReponsesController {
         Questions idQuestion = questionsRepository.getReferenceById(idquestion);
         reponses1.setQuestions(idQuestion);
         reponses1.setUser(idUser);
+        idQuestion.setNbrereponse(idQuestion.getNbrereponse()+1);
         reponses1.setTimestamp(LocalDateTime.now()); // Ajouter la date et l'heure actuelles
 
         //User user = userService.hawa();

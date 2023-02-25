@@ -184,7 +184,7 @@ public class AuthController {
       user.setPrenom(signUpRequest.getPrenom());
       //user.setUsername(signUpRequest.getUsername());
       user.setNumero(signUpRequest.getNumero());
-      user.setConfirmNotification(signUpRequest.getConfirmNotification());
+      user.getConfirmNotification();
       System.out.println(user.getRoles().contains("cvhbjnklmkjhgbvvvvvvvvvvvvvvvvhhhhhh  "  + roleRepository.findByName(ERole.ROLE_ADMIN)));
       if(user.getRoles().contains(roleRepository.findByName(ERole.ROLE_ADMIN))){
         System.out.println();
@@ -260,7 +260,7 @@ public class AuthController {
       user.setPrenom(signUpRequest.getPrenom());
       //user.setUsername(signUpRequest.getUsername());
       user.setNumero(signUpRequest.getNumero());
-      user.setConfirmNotification(signUpRequest.getConfirmNotification());
+      user.getConfirmNotification();
       System.out.println(user.getRoles().contains("cvhbjnklmkjhgbvvvvvvvvvvvvvvvvhhhhhh  "  + roleRepository.findByName(ERole.ROLE_ADMIN)));
       if(user.getRoles().contains(roleRepository.findByName(ERole.ROLE_ADMIN))){
         System.out.println();

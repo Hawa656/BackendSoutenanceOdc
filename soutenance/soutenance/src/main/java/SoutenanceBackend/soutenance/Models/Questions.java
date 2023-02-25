@@ -19,6 +19,7 @@ public class Questions {
     private Long id;
     private String question;
     private LocalDateTime timestamp;
+    private Long nbrereponse = Long.valueOf(0);
 
 
     @ManyToOne

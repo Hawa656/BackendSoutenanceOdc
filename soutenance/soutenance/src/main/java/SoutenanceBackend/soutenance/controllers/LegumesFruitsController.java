@@ -8,6 +8,7 @@ import SoutenanceBackend.soutenance.services.TutorielsService;
 import SoutenanceBackend.soutenance.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,6 +70,10 @@ public class LegumesFruitsController {
 
 
 
+        if (description.length() > 200) {
+            return "La description ne doit pas dépasser 200 caractères";
+        }
+
         LegumesFruits legumesFruits1 = new LegumesFruits();
         //if (idVideo == null) {
            // return legumesFruits1.setVideo();
@@ -107,6 +112,43 @@ public class LegumesFruitsController {
 
 
     }
+
+
+
+    //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("/lireLegumesFruits")
+
+    public List<LegumesFruits> read(){
+        return legumesFruitsService.lire();
+
+    }
+
+    //°°°°°°°°°°°°°°°°°°°°°°AFFICHER La liste des LEGUMES°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("/lireLegumes")
+    public List<LegumesFruits> afficherlistelegume(){
+        return legumesFruitsRepository.ListeLegumes();
+
+    }
+    //°°°°°°°°°°°°°°°°°°°°°°AFFICHER La liste des FRUITS°°°°°°°°°°°°°°°°°°°°°
+    @GetMapping("/lireFruits")
+    public List<LegumesFruits> afficherlistefruit(){
+        return legumesFruitsRepository.ListeFruits();
+
+    }
+
+    //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER UN LEGUME OU FRUIT AINSI QUE LE TUTORIEL (cascading ajouter au niveau du model legumeFruit permet de le faire)°°°°°°°°°°°°°°°°°°°°°
+    @DeleteMapping("/supprimerlegumesFruits/{id}")
+    public String delete(@PathVariable Long id){
+        return legumesFruitsService.supprimer(id);
+    }
+    //°°°°°°°°°°°°°°°°°°°°°°MODIFIER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
+    @PutMapping("modifierLegumesFruits/{id}")
+    public ResponseEntity<LegumesFruits> modifierLegumesFruits(@PathVariable Long id, @RequestBody LegumesFruits legumesFruits) {
+        LegumesFruits legumesFruitsModifie = legumesFruitsService.modifier(id, legumesFruits);
+        return ResponseEntity.ok(legumesFruitsModifie);
+    }
+
+}
 
 
    /* @PostMapping("/AjouterLegumesFruits/{id_user}")
@@ -170,26 +212,6 @@ public class LegumesFruitsController {
    }
 */
 
-    //°°°°°°°°°°°°°°°°°°°°°°AFFICHER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
-    @GetMapping("/lireLegumesFruits")
-
-    public List<LegumesFruits> read(){
-        return legumesFruitsService.lire();
-
-    }
-
-    //°°°°°°°°°°°°°°°°°°°°°°AFFICHER La liste des LEGUMES°°°°°°°°°°°°°°°°°°°°°
-    @GetMapping("/lireLegumes")
-    public List<LegumesFruits> afficherlistelegume(){
-        return legumesFruitsRepository.ListeLegumes();
-
-    }
-    //°°°°°°°°°°°°°°°°°°°°°°AFFICHER La liste des FRUITS°°°°°°°°°°°°°°°°°°°°°
-    @GetMapping("/lireFruits")
-    public List<LegumesFruits> afficherlistefruit(){
-        return legumesFruitsRepository.ListeFruits();
-
-    }
 
     //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER TUTORIEL ET LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
 //    @DeleteMapping("/supprimerlegumesFruits/{id}/{idTuto}")
@@ -200,17 +222,6 @@ public class LegumesFruitsController {
 //        legumesFruitsService.supprimer(id,tutorielsService.supprimer(idTuto), legumesFruits1);
 //        return "legume ou fruit et le tutoriel associer avec succès";
 //    }
-
-    //°°°°°°°°°°°°°°°°°°°°°°SUPPRIMER UN LEGUME OU FRUIT AINSI QUE LE TUTORIEL (cascading ajouter au niveau du model legumeFruit permet de le faire)°°°°°°°°°°°°°°°°°°°°°
-    @DeleteMapping("/supprimerlegumesFruits/{id}")
-    public String delete(@PathVariable Long id){
-        return legumesFruitsService.supprimer(id);
-    }
-    //°°°°°°°°°°°°°°°°°°°°°°MODIFIER UN LEGUME OU FRUIT°°°°°°°°°°°°°°°°°°°°°
-    @PutMapping("modifierLegumesFruits/{id}")
-    public LegumesFruits update(@PathVariable Long id, @RequestBody LegumesFruits legumesFruits){
-       return legumesFruitsService.modifier(id, legumesFruits);
-    }
 
 
 
@@ -439,4 +450,4 @@ public class LegumesFruitsController {
 
 
 
-}
+

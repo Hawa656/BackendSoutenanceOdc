@@ -37,22 +37,27 @@ public class LegumesFruitsServiceImpl implements LegumesFruitsService {
 
     @Override
     public LegumesFruits modifier(Long id, LegumesFruits legumesFruits) {
-        Tutoriels tutoriels = new Tutoriels();
-        TypeLegumeFruit typeLegumeFruit= new TypeLegumeFruit();
         return legumesFruitsRepository.findById(id)
-                .map(lf ->{
+                .map(lf -> {
                     lf.setNom(legumesFruits.getNom());
                     lf.setDescription(legumesFruits.getDescription());
                     lf.setPhoto(legumesFruits.getPhoto());
                     lf.setDureeFloraisaon(legumesFruits.getDureeFloraisaon());
                     lf.setPeriodeNormal(legumesFruits.getPeriodeNormal());
                     lf.setArrosage(legumesFruits.getArrosage());
-                    lf.setTutoriels(tutoriels);
-                    lf.setTypeLegumeFruit(typeLegumeFruit);
-                    return legumesFruitsRepository.save(lf);
-                } ).orElseThrow(() -> new RuntimeException("legume ou fruit non trouve"));
 
+                    if (legumesFruits.getTutoriels() != null) {
+                        lf.setTutoriels(legumesFruits.getTutoriels());
+                    }
+                    if (legumesFruits.getTypeLegumeFruit() != null) {
+                        lf.setTypeLegumeFruit(legumesFruits.getTypeLegumeFruit());
+                    }
+
+                    return legumesFruitsRepository.save(lf);
+                })
+                .orElseThrow(() -> new RuntimeException("LegumesFruits non trouvé avec l'ID: " + legumesFruits.getNom()));
     }
+
 
     @Override
     public String supprimer(Long id) {

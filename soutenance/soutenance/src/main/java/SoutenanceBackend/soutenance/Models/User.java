@@ -56,7 +56,7 @@ import java.util.Set;
 
 
 
-    private Boolean confirmNotification;
+    private Boolean confirmNotification = true;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "user_roles",

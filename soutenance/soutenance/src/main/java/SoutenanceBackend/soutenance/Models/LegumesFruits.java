@@ -21,7 +21,7 @@ public class LegumesFruits {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
-    @Size(max = 9000)
+    @Size(max = 200)
     private String description;
     private String photo;
     private String dureeFloraisaon;

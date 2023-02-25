@@ -38,9 +38,9 @@ public class NotificationsController {
 
         List<Notifications> notificationsListes = notificationsService.lireNotifUserConecter(idNot);
 
-        if (notificationsListes.isEmpty()){
+        /*if (notificationsListes.isEmpty()){
             return new ResponseEntity<>("Auccune notification pour le moment", HttpStatus.NOT_FOUND);
-        }
+        }*/
 
         System.out.println("ppppppppppppppppppppp"+ notificationsListes);
 

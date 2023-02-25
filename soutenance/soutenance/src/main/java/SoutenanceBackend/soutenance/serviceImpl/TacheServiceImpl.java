@@ -23,6 +23,7 @@ public class TacheServiceImpl implements TacheService {
     public Tache creer(Tache tache) {
         //on verifie si l'attribut confirmNotification est a true
         User user = tache.getUser();
+
         if(user.getConfirmNotification()){
             return tacheRepository.save(tache);
         }else {
