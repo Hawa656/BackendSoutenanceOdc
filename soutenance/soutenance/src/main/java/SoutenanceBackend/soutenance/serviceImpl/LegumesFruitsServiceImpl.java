@@ -1,16 +1,13 @@
 package SoutenanceBackend.soutenance.serviceImpl;
 
-import SoutenanceBackend.soutenance.Models.EperiodeNormal;
 import SoutenanceBackend.soutenance.Models.LegumesFruits;
-import SoutenanceBackend.soutenance.Models.Tutoriels;
-import SoutenanceBackend.soutenance.Models.TypeLegumeFruit;
 import SoutenanceBackend.soutenance.Repository.LegumesFruitsRepository;
 import SoutenanceBackend.soutenance.Repository.TypeLegumeFruitRepository;
 import SoutenanceBackend.soutenance.services.LegumesFruitsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LegumesFruitsServiceImpl implements LegumesFruitsService {
@@ -34,6 +31,9 @@ public class LegumesFruitsServiceImpl implements LegumesFruitsService {
     public List<LegumesFruits> lire() {
         return legumesFruitsRepository.findAll();
     }
+
+
+
 
     @Override
     public LegumesFruits modifier(Long id, LegumesFruits legumesFruits) {
@@ -66,7 +66,24 @@ public class LegumesFruitsServiceImpl implements LegumesFruitsService {
     }
 
     @Override
-    public LegumesFruits RecupereIdLegume(Long idLegumeFruit) {
-        return legumesFruitsRepository.findById(idLegumeFruit).get();
+    public Optional<LegumesFruits> RecupereIdLegume(Long idLegumeFruit) {
+        return legumesFruitsRepository.findById(idLegumeFruit);
     }
+//==========================legumeFruit par Id avec tuto et etape associé========================================================
+    @Override
+    public List<Object[]> getLegumesFruitsWithTutorielAndEtapes(Long id) {
+        List<Object[]> results = legumesFruitsRepository.findLegumesFruitsByIdWithTutorielAndEtapes(id);
+
+        // effectuez des opérations supplémentaires sur les résultats si nécessaire
+
+        return results;
+    }
+
+
+   /* @Override
+    public List<Object[]> getLegumesFruitsWithTutorielAndEtapes(Long id) {
+        return legumesFruitsRepository.findLegumesFruitsByIdWithTutorielAndEtapes(id);
+        }*/
+
+
 }

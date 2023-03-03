@@ -1,14 +1,14 @@
 package SoutenanceBackend.soutenance.services;
 
-import SoutenanceBackend.soutenance.Models.Role;
 import SoutenanceBackend.soutenance.Models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     String Supprimer(Long id_users);  // LA METHODE PERMETTANT DE SUPPRIMER UN UTILISATEUR
 
-    User findUserbyId(Long id);
+    Optional<User> findUserbyId(Long id);
     String Modifier(Long id,User users);   // LA METHODE PERMETTANT DE MODIFIER UN UTILISATEUR
 
     List<User> Afficher();       // LA METHODE PERMETTANT D'AFFICHER UN UTILISATEUR

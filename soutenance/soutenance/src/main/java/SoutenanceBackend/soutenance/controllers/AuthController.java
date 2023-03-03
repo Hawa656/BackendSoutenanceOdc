@@ -2,6 +2,7 @@ package SoutenanceBackend.soutenance.controllers;
 
 
 import SoutenanceBackend.soutenance.Models.ERole;
+import SoutenanceBackend.soutenance.Models.LegumesFruits;
 import SoutenanceBackend.soutenance.Models.Role;
 import SoutenanceBackend.soutenance.Models.User;
 import SoutenanceBackend.soutenance.Repository.RoleRepository;
@@ -73,6 +74,11 @@ public class AuthController {
   @GetMapping("/listeUser")
   public List<User> read(){
     return userService.Afficher();
+  }
+
+  @GetMapping("RecupererIdUser/{id}")
+  public Optional<User> RecupererId(@PathVariable("id") Long id){
+    return userService.findUserbyId(id);
   }
 
   //  °°°°°°°°°°°°°°°MODIFIER UN UTILISATEUR°°°°°°°°°°°°°°°°°°°°°°°°

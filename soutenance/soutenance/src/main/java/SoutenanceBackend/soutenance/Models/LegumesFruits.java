@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,9 +32,11 @@ public class LegumesFruits {
     private String arrosage;
 
     private String periodeNormal;
+    @Column(name = "heure_creation")
+    private LocalDateTime heure_creation;
 
 //    POUR QUE LORSQU'ON SUPPRIME LEGUMEFRUIT ON SUPPRIME LE TUTORIEL QUI LUI EST ASSOCIE
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_tutoriel")
     private Tutoriels tutoriels;
 
@@ -41,10 +45,10 @@ public class LegumesFruits {
     @ManyToOne
     private TypeLegumeFruit typeLegumeFruit;
 
-    @OneToOne
+ /*   @OneToOne
     @JoinColumn(name = "id_video")
     private Video video;
-
+*/
     @ManyToOne
     private User user;
 

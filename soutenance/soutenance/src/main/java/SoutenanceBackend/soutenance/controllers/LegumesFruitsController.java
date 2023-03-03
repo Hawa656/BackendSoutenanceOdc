@@ -13,7 +13,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/legumefruit")
@@ -41,7 +43,7 @@ public class LegumesFruitsController {
 
 
     @GetMapping("RecupererIdLegumeFruit/{idlegumefruit}")
-    public LegumesFruits RecupererId(@PathVariable("idlegumefruit") Long idlegumefruit){
+    public Optional<LegumesFruits> RecupererId(@PathVariable("idlegumefruit") Long idlegumefruit){
         return legumesFruitsService.RecupereIdLegume(idlegumefruit);
     }
 
@@ -54,6 +56,7 @@ public class LegumesFruitsController {
         this.tutorielsService = tutorielsService;
         this.tutorielsRepository = tutorielsRepository;
     }
+
 
 
     @PostMapping("/Ajouterajoutfruilegume/{type}/{idTuto}/{iduser}")
@@ -75,6 +78,7 @@ public class LegumesFruitsController {
         }
 
         LegumesFruits legumesFruits1 = new LegumesFruits();
+
         //if (idVideo == null) {
            // return legumesFruits1.setVideo();
         //}
@@ -101,7 +105,7 @@ public class LegumesFruitsController {
             //legumesFruits1.setVideo(video);
             Tutoriels tutoriels = tutorielsRepository.findById(idTuto).get();
             legumesFruits1.setTutoriels(tutoriels);
-
+            legumesFruits1.setHeure_creation(LocalDateTime.now());
             legumesFruitsService.creer(legumesFruits1);
             return "Legume ajouter avec succès";
         }
@@ -122,6 +126,8 @@ public class LegumesFruitsController {
         return legumesFruitsService.lire();
 
     }
+    //°°°°°°°°°°°°°°°°°°°°°°Recuperer legumeFruitParId avec le tuto et etape associé°°°°°°°°°°°°°°°°°°°°°
+
 
     //°°°°°°°°°°°°°°°°°°°°°°AFFICHER La liste des LEGUMES°°°°°°°°°°°°°°°°°°°°°
     @GetMapping("/lireLegumes")
@@ -146,6 +152,12 @@ public class LegumesFruitsController {
     public ResponseEntity<LegumesFruits> modifierLegumesFruits(@PathVariable Long id, @RequestBody LegumesFruits legumesFruits) {
         LegumesFruits legumesFruitsModifie = legumesFruitsService.modifier(id, legumesFruits);
         return ResponseEntity.ok(legumesFruitsModifie);
+    }
+//=================================================
+    @GetMapping("/legumes-fruits/{id}/tutoriels-etapes")
+    public ResponseEntity<List<Object[]>> getLegumesFruitsWithTutorielAndEtapes(@PathVariable Long id) {
+        List<Object[]> results = legumesFruitsService.getLegumesFruitsWithTutorielAndEtapes(id);
+        return ResponseEntity.ok(results);
     }
 
 }

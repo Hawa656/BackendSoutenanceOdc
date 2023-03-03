@@ -21,7 +21,7 @@ public class Etape {
     private  String photo;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tutoriels_id")
     private Tutoriels tutoriels;
 }

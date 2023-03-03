@@ -1,7 +1,6 @@
 package SoutenanceBackend.soutenance.serviceImpl;
 
 import SoutenanceBackend.soutenance.Models.ERole;
-import SoutenanceBackend.soutenance.Models.Role;
 import SoutenanceBackend.soutenance.Models.User;
 import SoutenanceBackend.soutenance.Repository.RoleRepository;
 import SoutenanceBackend.soutenance.Repository.UserRepository;
@@ -14,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,8 +45,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserbyId(Long id) {
-        return userRepository.findUserById(id);
+    public Optional<User> findUserbyId(Long id) {
+        return Optional.ofNullable(userRepository.findUserById(id));
     }
 
     @Override

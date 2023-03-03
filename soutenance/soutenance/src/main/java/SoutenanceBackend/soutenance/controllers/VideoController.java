@@ -85,10 +85,12 @@ public class VideoController {
 
     }
     //°°°°°°°°°°°°°°°°°°°°°°MODIFIER UNE VIDEO°°°°°°°°°°°°°°°°°°°°°
-    @PutMapping("modifierVideo/{id}")
+   @PutMapping("modifierVideo/{id}")
     public SoutenanceBackend.soutenance.Models.Video update(@PathVariable Long id, @RequestBody SoutenanceBackend.soutenance.Models.Video video){
         return videoService.modifier(id, video);
     }
+
+
 
 
 
@@ -100,16 +102,12 @@ public class VideoController {
                         @RequestParam(value = "videorecu") String videorecu) throws IOException {
     //recuperation de l
         String nomvideo = StringUtils.cleanPath(file.getOriginalFilename());
-        //Image.save(file, );
         //Enregistrement de la la video
         Video.save(file, nomvideo);
 
-        //video.setUser(userRepository.findById(id).get());
         SoutenanceBackend.soutenance.Models.Video video = new JsonMapper().readValue(videorecu, SoutenanceBackend.soutenance.Models.Video.class);
         video.setVideo(nomvideo);
         //recuperation de l'id de l'utilisateur connecté
-        //User user = userService.hawa();
-        //video.setUser(user);
         video.setLegumesFruits(new LegumesFruits(idLegumeFruit));
         video.setUser(new User(idUser));
 

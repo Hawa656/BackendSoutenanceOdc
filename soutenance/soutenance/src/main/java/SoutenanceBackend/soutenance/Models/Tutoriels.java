@@ -22,29 +22,6 @@ public class Tutoriels {
     private String titre;
     private  String espacementEntreGraine;
 
-    //pour que ça prennent plusieurs chaine de caractere de long text
-   /* @Lob
 
-
-
-    @ManyToOne
-    @JoinColumn(name = "tutoriels_id")
-    private LegumesFruits legumesFruits;
-
-
-  /*    @OneToMany(mappedBy = "tutoriels", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Etape> etapes = new ArrayList<>();
-
-
-    public void addEtape(Etape etape) {
-        etapes.add(etape);
-        etape.setTutoriels(this);
-    }*/
-
-
-    /* public void removeEtape(Etape etape) {
-        etapes.remove(etape);
-        etape.setTutoriels(null);
-    }*/
 
 }
